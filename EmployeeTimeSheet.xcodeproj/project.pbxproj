@@ -22,6 +22,14 @@
 		0E1C68FA18E85FBA00563AC7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C68DE18E85FBA00563AC7 /* CoreData.framework */; };
 		0E1C690218E85FBA00563AC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0E1C690018E85FBA00563AC7 /* InfoPlist.strings */; };
 		0E1C690418E85FBA00563AC7 /* EmployeeTimeSheetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1C690318E85FBA00563AC7 /* EmployeeTimeSheetTests.m */; };
+		0E1C691018E881D300563AC7 /* TimeCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1C690F18E881D300563AC7 /* TimeCard.m */; };
+		0E1C691318E881D700563AC7 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1C691218E881D700563AC7 /* Location.m */; };
+		0E1C691618E881D700563AC7 /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1C691518E881D700563AC7 /* Manager.m */; };
+		0E1C692018E895F100563AC7 /* ETSAddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1C691F18E895F100563AC7 /* ETSAddLocationViewController.m */; };
+		0E1C692218E8963A00563AC7 /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1C692118E8963A00563AC7 /* iPad.storyboard */; };
+		0E1C692418E8964E00563AC7 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1C692318E8964E00563AC7 /* iPhone.storyboard */; };
+		0E1C692618E8AD3600563AC7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C692518E8AD3600563AC7 /* MapKit.framework */; };
+		0E1C692818E8AD4200563AC7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C692718E8AD4200563AC7 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +61,18 @@
 		0E1C68FF18E85FBA00563AC7 /* EmployeeTimeSheetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EmployeeTimeSheetTests-Info.plist"; sourceTree = "<group>"; };
 		0E1C690118E85FBA00563AC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0E1C690318E85FBA00563AC7 /* EmployeeTimeSheetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmployeeTimeSheetTests.m; sourceTree = "<group>"; };
+		0E1C690E18E881D300563AC7 /* TimeCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeCard.h; path = Model/TimeCard.h; sourceTree = "<group>"; };
+		0E1C690F18E881D300563AC7 /* TimeCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeCard.m; path = Model/TimeCard.m; sourceTree = "<group>"; };
+		0E1C691118E881D700563AC7 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = Model/Location.h; sourceTree = "<group>"; };
+		0E1C691218E881D700563AC7 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = Model/Location.m; sourceTree = "<group>"; };
+		0E1C691418E881D700563AC7 /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Manager.h; path = Model/Manager.h; sourceTree = "<group>"; };
+		0E1C691518E881D700563AC7 /* Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Manager.m; path = Model/Manager.m; sourceTree = "<group>"; };
+		0E1C691E18E895F100563AC7 /* ETSAddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSAddLocationViewController.h; sourceTree = "<group>"; };
+		0E1C691F18E895F100563AC7 /* ETSAddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSAddLocationViewController.m; sourceTree = "<group>"; };
+		0E1C692118E8963A00563AC7 /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = "<group>"; };
+		0E1C692318E8964E00563AC7 /* iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPhone.storyboard; sourceTree = "<group>"; };
+		0E1C692518E8AD3600563AC7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0E1C692718E8AD4200563AC7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +80,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E1C692818E8AD4200563AC7 /* CoreLocation.framework in Frameworks */,
+				0E1C692618E8AD3600563AC7 /* MapKit.framework in Frameworks */,
 				0E1C68DB18E85FBA00563AC7 /* CoreGraphics.framework in Frameworks */,
 				0E1C68DF18E85FBA00563AC7 /* CoreData.framework in Frameworks */,
 				0E1C68DD18E85FBA00563AC7 /* UIKit.framework in Frameworks */,
@@ -103,6 +125,8 @@
 		0E1C68D718E85FBA00563AC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E1C692718E8AD4200563AC7 /* CoreLocation.framework */,
+				0E1C692518E8AD3600563AC7 /* MapKit.framework */,
 				0E1C68D818E85FBA00563AC7 /* Foundation.framework */,
 				0E1C68DA18E85FBA00563AC7 /* CoreGraphics.framework */,
 				0E1C68DC18E85FBA00563AC7 /* UIKit.framework */,
@@ -115,8 +139,10 @@
 		0E1C68E018E85FBA00563AC7 /* EmployeeTimeSheet */ = {
 			isa = PBXGroup;
 			children = (
-				0E1C68E918E85FBA00563AC7 /* ETSAppDelegate.h */,
-				0E1C68EA18E85FBA00563AC7 /* ETSAppDelegate.m */,
+				0E1C691918E8939800563AC7 /* Views */,
+				0E1C691818E8938500563AC7 /* Controllers */,
+				0E1C691718E881DF00563AC7 /* Model */,
+				0E1C690D18E85FDD00563AC7 /* AppDelegate */,
 				0E1C68EF18E85FBA00563AC7 /* Images.xcassets */,
 				0E1C68EC18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld */,
 				0E1C68E118E85FBA00563AC7 /* Supporting Files */,
@@ -151,6 +177,46 @@
 				0E1C690018E85FBA00563AC7 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0E1C690D18E85FDD00563AC7 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				0E1C68E918E85FBA00563AC7 /* ETSAppDelegate.h */,
+				0E1C68EA18E85FBA00563AC7 /* ETSAppDelegate.m */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		0E1C691718E881DF00563AC7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0E1C691418E881D700563AC7 /* Manager.h */,
+				0E1C691518E881D700563AC7 /* Manager.m */,
+				0E1C691118E881D700563AC7 /* Location.h */,
+				0E1C691218E881D700563AC7 /* Location.m */,
+				0E1C690E18E881D300563AC7 /* TimeCard.h */,
+				0E1C690F18E881D300563AC7 /* TimeCard.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		0E1C691818E8938500563AC7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0E1C691E18E895F100563AC7 /* ETSAddLocationViewController.h */,
+				0E1C691F18E895F100563AC7 /* ETSAddLocationViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0E1C691918E8939800563AC7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0E1C692118E8963A00563AC7 /* iPad.storyboard */,
+				0E1C692318E8964E00563AC7 /* iPhone.storyboard */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +267,14 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Unbounded Solutions";
 				TargetAttributes = {
+					0E1C68D418E85FBA00563AC7 = {
+						DevelopmentTeam = VNL6497582;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					0E1C68F418E85FBA00563AC7 = {
 						TestTargetID = 0E1C68D418E85FBA00563AC7;
 					};
@@ -230,7 +304,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E1C68E518E85FBA00563AC7 /* InfoPlist.strings in Resources */,
+				0E1C692218E8963A00563AC7 /* iPad.storyboard in Resources */,
 				0E1C68F018E85FBA00563AC7 /* Images.xcassets in Resources */,
+				0E1C692418E8964E00563AC7 /* iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,8 +326,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E1C68E718E85FBA00563AC7 /* main.m in Sources */,
+				0E1C691618E881D700563AC7 /* Manager.m in Sources */,
+				0E1C691318E881D700563AC7 /* Location.m in Sources */,
 				0E1C68EB18E85FBA00563AC7 /* ETSAppDelegate.m in Sources */,
+				0E1C691018E881D300563AC7 /* TimeCard.m in Sources */,
 				0E1C68EE18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld in Sources */,
+				0E1C692018E895F100563AC7 /* ETSAddLocationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +450,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EmployeeTimeSheet/EmployeeTimeSheet-Prefix.pch";
 				INFOPLIST_FILE = "EmployeeTimeSheet/EmployeeTimeSheet-Info.plist";
@@ -383,6 +464,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EmployeeTimeSheet/EmployeeTimeSheet-Prefix.pch";
 				INFOPLIST_FILE = "EmployeeTimeSheet/EmployeeTimeSheet-Info.plist";
@@ -450,6 +532,7 @@
 				0E1C690918E85FBA00563AC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E1C690A18E85FBA00563AC7 /* Build configuration list for PBXNativeTarget "EmployeeTimeSheetTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +541,7 @@
 				0E1C690C18E85FBA00563AC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
