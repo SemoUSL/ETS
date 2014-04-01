@@ -15,8 +15,8 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *btnSaveLocation;
 @property (strong, nonatomic) IBOutlet UILabel *lblRabgeValue;
 @property (strong, nonatomic) IBOutlet UISlider *sldRange;
+@property (strong, nonatomic) IBOutlet UITextField *tfSearchLocation;
 
-@property (strong, nonatomic) IBOutlet UISearchBar *sbLocationSearch;
 @property (strong, nonatomic) IBOutlet MKMapView *map;
 
 

@@ -16,11 +16,6 @@
                                 <rect key="frame" x="0.0" y="242" width="320" height="277"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
-                            <searchBar contentMode="redraw" id="7ie-fa-K2m">
-                                <rect key="frame" x="0.0" y="198" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="10" maxValue="500" id="pWJ-DR-4sr">
                                 <rect key="frame" x="-2" y="168" width="324" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -50,6 +45,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="hlo-Om-gHY">
+                                <rect key="frame" x="0.0" y="206" width="320" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -60,9 +61,9 @@
                         <outlet property="btnSaveLocation" destination="Mc1-aI-aif" id="qbw-gF-Nzx"/>
                         <outlet property="lblRabgeValue" destination="xZt-Rn-5nU" id="NiM-I2-Mo3"/>
                         <outlet property="map" destination="UWL-4F-EBd" id="6vv-jS-cTC"/>
-                        <outlet property="sbLocationSearch" destination="7ie-fa-K2m" id="cyi-DA-83Z"/>
                         <outlet property="sldRange" destination="pWJ-DR-4sr" id="g6s-Mk-nSk"/>
                         <outlet property="tfLocationName" destination="3F3-2d-tnl" id="ouK-dR-7VB"/>
+                        <outlet property="tfSearchLocation" destination="hlo-Om-gHY" id="8EQ-cS-WVb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tyn-z4-SPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
