@@ -6,25 +6,25 @@
         <attribute name="longitude" attributeType="Double" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="range" optional="YES" attributeType="Integer 16" defaultValueString="20" syncable="YES"/>
-        <relationship name="manager" maxCount="1" deletionRule="Nullify" destinationEntity="Manager" inverseName="location" inverseEntity="Manager" syncable="YES"/>
+        <relationship name="manager" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Manager" inverseName="location" inverseEntity="Manager" syncable="YES"/>
         <relationship name="timeCard" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TimeCard" inverseName="location" inverseEntity="TimeCard" syncable="YES"/>
     </entity>
     <entity name="Manager" representedClassName="Manager" syncable="YES">
         <attribute name="email" attributeType="String" regularExpressionString="^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" minValueString="2" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" minValueString="7" regularExpressionString="\+?[0-9]+" syncable="YES"/>
-        <relationship name="location" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="manager" inverseEntity="Location" syncable="YES"/>
+        <relationship name="location" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="manager" inverseEntity="Location" syncable="YES"/>
     </entity>
     <entity name="TimeCard" representedClassName="TimeCard" syncable="YES">
         <attribute name="checkIn" attributeType="Date" defaultDateTimeInterval="0" defaultValueString="TIME" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="checkOut" attributeType="Date" syncable="YES"/>
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="manualUpdated" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <relationship name="location" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="timeCard" inverseEntity="Location" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="timeCard" inverseEntity="Location" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Location" positionX="-378" positionY="-31" width="128" height="43"/>
-        <element name="Manager" positionX="-54" positionY="-54" width="128" height="43"/>
-        <element name="TimeCard" positionX="-56" positionY="-9" width="128" height="43"/>
+        <element name="Location" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Manager" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="TimeCard" positionX="0" positionY="0" width="128" height="118"/>
     </elements>
 </model>

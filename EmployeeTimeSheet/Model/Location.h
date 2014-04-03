@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <MapKit/MapKit.h>
 
 @class TimeCard;
 
@@ -28,5 +29,11 @@
 - (void)removeTimeCardObject:(TimeCard *)value;
 - (void)addTimeCard:(NSSet *)values;
 - (void)removeTimeCard:(NSSet *)values;
+
++ (Location *)findOrBuildByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude inContext:(NSManagedObjectContext *)longitude;
+- (id)initWithContext:(NSManagedObjectContext *)context;
+//- (void)unpackDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
+
+
 
 @end
