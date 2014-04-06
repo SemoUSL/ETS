@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E04FCA218ED995C00ACCC93 /* ETSAddTimeCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E04FCA118ED995C00ACCC93 /* ETSAddTimeCardViewController.m */; };
 		0E1C68D918E85FBA00563AC7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C68D818E85FBA00563AC7 /* Foundation.framework */; };
 		0E1C68DB18E85FBA00563AC7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C68DA18E85FBA00563AC7 /* CoreGraphics.framework */; };
 		0E1C68DD18E85FBA00563AC7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C68DC18E85FBA00563AC7 /* UIKit.framework */; };
@@ -30,6 +31,8 @@
 		0E1C692418E8964E00563AC7 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1C692318E8964E00563AC7 /* iPhone.storyboard */; };
 		0E1C692618E8AD3600563AC7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C692518E8AD3600563AC7 /* MapKit.framework */; };
 		0E1C692818E8AD4200563AC7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C692718E8AD4200563AC7 /* CoreLocation.framework */; };
+		0E1F60DE18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F60DD18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m */; };
+		0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E04FCA018ED995C00ACCC93 /* ETSAddTimeCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSAddTimeCardViewController.h; sourceTree = "<group>"; };
+		0E04FCA118ED995C00ACCC93 /* ETSAddTimeCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSAddTimeCardViewController.m; sourceTree = "<group>"; };
 		0E1C68D518E85FBA00563AC7 /* EmployeeTimeSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmployeeTimeSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E1C68D818E85FBA00563AC7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E1C68DA18E85FBA00563AC7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,6 +78,10 @@
 		0E1C692318E8964E00563AC7 /* iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPhone.storyboard; sourceTree = "<group>"; };
 		0E1C692518E8AD3600563AC7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0E1C692718E8AD4200563AC7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		0E1F60DC18EC180300A73DE0 /* ETSViewLocatinosMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSViewLocatinosMapViewController.h; sourceTree = "<group>"; };
+		0E1F60DD18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewLocatinosMapViewController.m; sourceTree = "<group>"; };
+		0EAC616518F1BE390061CA0D /* ETSViewTimeCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSViewTimeCardsTableViewController.h; sourceTree = "<group>"; };
+		0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewTimeCardsTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +112,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E04FC9D18ED990800ACCC93 /* Locations */ = {
+			isa = PBXGroup;
+			children = (
+				0E1F60DB18EC17A200A73DE0 /* ViewLocationsMap */,
+				0E1F60DA18EC178000A73DE0 /* AddLocation */,
+			);
+			name = Locations;
+			sourceTree = "<group>";
+		};
+		0E04FC9E18ED992100ACCC93 /* TimeCards */ = {
+			isa = PBXGroup;
+			children = (
+				0EAC616418F1BDEF0061CA0D /* ViewTimeCards */,
+				0E04FC9F18ED993000ACCC93 /* AddTimeCard */,
+			);
+			name = TimeCards;
+			sourceTree = "<group>";
+		};
+		0E04FC9F18ED993000ACCC93 /* AddTimeCard */ = {
+			isa = PBXGroup;
+			children = (
+				0E04FCA018ED995C00ACCC93 /* ETSAddTimeCardViewController.h */,
+				0E04FCA118ED995C00ACCC93 /* ETSAddTimeCardViewController.m */,
+			);
+			name = AddTimeCard;
+			sourceTree = "<group>";
+		};
 		0E1C68CC18E85FBA00563AC7 = {
 			isa = PBXGroup;
 			children = (
@@ -204,8 +240,8 @@
 		0E1C691818E8938500563AC7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0E1C691E18E895F100563AC7 /* ETSAddLocationViewController.h */,
-				0E1C691F18E895F100563AC7 /* ETSAddLocationViewController.m */,
+				0E04FC9E18ED992100ACCC93 /* TimeCards */,
+				0E04FC9D18ED990800ACCC93 /* Locations */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -217,6 +253,33 @@
 				0E1C692318E8964E00563AC7 /* iPhone.storyboard */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		0E1F60DA18EC178000A73DE0 /* AddLocation */ = {
+			isa = PBXGroup;
+			children = (
+				0E1C691E18E895F100563AC7 /* ETSAddLocationViewController.h */,
+				0E1C691F18E895F100563AC7 /* ETSAddLocationViewController.m */,
+			);
+			name = AddLocation;
+			sourceTree = "<group>";
+		};
+		0E1F60DB18EC17A200A73DE0 /* ViewLocationsMap */ = {
+			isa = PBXGroup;
+			children = (
+				0E1F60DC18EC180300A73DE0 /* ETSViewLocatinosMapViewController.h */,
+				0E1F60DD18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m */,
+			);
+			name = ViewLocationsMap;
+			sourceTree = "<group>";
+		};
+		0EAC616418F1BDEF0061CA0D /* ViewTimeCards */ = {
+			isa = PBXGroup;
+			children = (
+				0EAC616518F1BE390061CA0D /* ETSViewTimeCardsTableViewController.h */,
+				0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */,
+			);
+			name = ViewTimeCards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,12 +388,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E04FCA218ED995C00ACCC93 /* ETSAddTimeCardViewController.m in Sources */,
 				0E1C68E718E85FBA00563AC7 /* main.m in Sources */,
+				0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */,
 				0E1C691618E881D700563AC7 /* Manager.m in Sources */,
 				0E1C691318E881D700563AC7 /* Location.m in Sources */,
 				0E1C68EB18E85FBA00563AC7 /* ETSAppDelegate.m in Sources */,
 				0E1C691018E881D300563AC7 /* TimeCard.m in Sources */,
 				0E1C68EE18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld in Sources */,
+				0E1F60DE18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m in Sources */,
 				0E1C692018E895F100563AC7 /* ETSAddLocationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +455,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Khaled travelfox (8E58MHXF44)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -428,6 +495,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Khaled travelfox (8E58MHXF44)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -451,10 +519,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EmployeeTimeSheet/EmployeeTimeSheet-Prefix.pch";
 				INFOPLIST_FILE = "EmployeeTimeSheet/EmployeeTimeSheet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -465,10 +536,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EmployeeTimeSheet/EmployeeTimeSheet-Prefix.pch";
 				INFOPLIST_FILE = "EmployeeTimeSheet/EmployeeTimeSheet-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

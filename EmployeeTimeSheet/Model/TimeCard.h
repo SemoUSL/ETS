@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "Location.h"
+
 
 
 @interface TimeCard : NSManagedObject
@@ -18,4 +20,5 @@
 @property (nonatomic, retain) NSNumber * manualUpdated;
 @property (nonatomic, retain) NSManagedObject *location;
 
++ (TimeCard *)BuildByCheckIn:(NSDate*)checkInTime location:(Location*)checkInlocatoin comment:(NSString*)checkInComment manual:(BOOL)isManual inContext:(NSManagedObjectContext*) context;
 @end

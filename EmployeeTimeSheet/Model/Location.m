@@ -42,6 +42,21 @@
     return location;
     
 }
++ (NSFetchedResultsController*) getLocationsIncontext:(NSManagedObjectContext*)context
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Location"];
+    fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc]initWithKey:@"name" ascending:NO]];
+    NSFetchedResultsController* frc = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"Root"];
+    NSError* error;
+    [frc performFetch:&error];
+    if (error) {
+        NSLog(@"ERR:%@",error);
+        return nil;
+    }
+    return frc;
+    
+}
+
 - (id)initWithContext:(NSManagedObjectContext *)context
 {
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:context];

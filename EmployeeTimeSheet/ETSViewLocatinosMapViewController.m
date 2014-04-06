@@ -45,6 +45,30 @@
     }
     // Do any additional setup after loading the view.
 }
+- (NSFetchedResultsController *)fetchedResultsController {
+    
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    // Create and configure a fetch request with the Book entity.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    // Create the sort descriptors array.
+    
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sortDescriptors = @[nameDescriptor];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Create and initialize the fetch results controller.
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
+}
+
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
@@ -73,12 +97,12 @@
 
 
 
--(void)addMapAnnotationForLocation:(Location*)location
-{
+-(void)addMapAnnotationForLocation:(Location*)location{
     {
 //        [[CLLocationDegrees alloc]init]
         CLLocationCoordinate2D point = CLLocationCoordinate2DMake((CLLocationDegrees)[location.latitude doubleValue], (CLLocationDegrees)[location.longitude doubleValue]);
         
+
         [self addMapOverLay:point radius:[location.range integerValue]];
         MKPointAnnotation * pin = [[MKPointAnnotation alloc]init];
         pin.coordinate = point;
@@ -91,14 +115,14 @@
     
 }
 
-- (void)addMapOverLay:(CLLocationCoordinate2D)point radius:(NSInteger) radius
-{
+- (void)addMapOverLay:(CLLocationCoordinate2D)point radius:(NSInteger) radius{
     
-    MKCircle *circle=[MKCircle circleWithCenterCoordinate:point radius:radius];
+    
+    MKCircle *circle=[ MKCircle circleWithCenterCoordinate:point radius:radius];
     [self.map addOverlay:circle];
+    [self.map reloadInputViews];
 }
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if ([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
     
@@ -118,34 +142,18 @@
     return pav;
 }
 
-- (NSFetchedResultsController *)fetchedResultsController {
-    
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    
-    // Create and configure a fetch request with the Book entity.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    
-    // Create the sort descriptors array.
-
-    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSArray *sortDescriptors = @[nameDescriptor];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Create and initialize the fetch results controller.
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    _fetchedResultsController.delegate = self;
-    
-    return _fetchedResultsController;
-}
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//implement the viewForOverlay delegate method...
+-(MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay
+{
+    MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
+    circleView.strokeColor = [UIColor blueColor];
+    circleView.lineWidth = 2;
+    return circleView;
 }
 
 
@@ -166,8 +174,7 @@
 }
 
 #pragma mark - Location delegate
--(void)addLocation:(Location *)location withSave:(BOOL)save
-{
+-(void)addLocation:(Location *)location withSave:(BOOL)save{
     NSError *error;
     if (![[self.fetchedResultsController managedObjectContext] save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);

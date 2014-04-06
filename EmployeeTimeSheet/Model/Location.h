@@ -30,7 +30,8 @@
 - (void)addTimeCard:(NSSet *)values;
 - (void)removeTimeCard:(NSSet *)values;
 
-+ (Location *)findOrBuildByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude inContext:(NSManagedObjectContext *)longitude;
++ (Location *)findOrBuildByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude inContext:(NSManagedObjectContext *)context;
++ (NSFetchedResultsController*) getLocationsIncontext:(NSManagedObjectContext*)context;
 - (id)initWithContext:(NSManagedObjectContext *)context;
 //- (void)unpackDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
