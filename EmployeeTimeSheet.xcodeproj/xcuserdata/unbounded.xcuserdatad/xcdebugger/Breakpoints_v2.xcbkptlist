@@ -16,16 +16,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EmployeeTimeSheet/ETSViewLocatinosMapViewController.m"
+            timestampString = "418501987.398227"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "-addMapAnnotationForLocation:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EmployeeTimeSheet/ETSAddLocationViewController.m"
-            timestampString = "417902576.2719"
+            filePath = "EmployeeTimeSheet/ETSAddTimeCardViewController.m"
+            timestampString = "418604859.237988"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "-initWithNibName:bundle:"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-saveTimeCard:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

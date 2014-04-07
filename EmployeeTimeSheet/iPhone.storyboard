@@ -87,7 +87,7 @@
         <scene sceneID="Kpp-7g-JYX">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gpc-Mg-1a4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="nn4-Pd-kLc"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="07-map-marker.png" id="nn4-Pd-kLc"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="V3Q-8X-Rrl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -232,7 +232,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" id="rSM-bm-7Ks">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="wHM-2J-wzf">
                             <connections>
-                                <action selector="saveOldTimeCard:" destination="PiV-Pb-gJX" id="4o9-58-X4l"/>
+                                <action selector="saveTimeCard:" destination="PiV-Pb-gJX" id="V5Q-ee-1uA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -250,7 +250,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <scene sceneID="vDd-Lb-v5f">
             <objects>
                 <navigationController definesPresentationContext="YES" id="MrP-Le-Zzc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="DY8-qY-DpG"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="11-clock.png" id="DY8-qY-DpG"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NIC-wR-Vab">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -283,6 +283,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="-263" y="-987"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="07-map-marker.png" width="16" height="26"/>
+        <image name="11-clock.png" width="25" height="25"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

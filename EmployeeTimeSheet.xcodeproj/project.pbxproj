@@ -32,6 +32,8 @@
 		0E1C692618E8AD3600563AC7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C692518E8AD3600563AC7 /* MapKit.framework */; };
 		0E1C692818E8AD4200563AC7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1C692718E8AD4200563AC7 /* CoreLocation.framework */; };
 		0E1F60DE18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F60DD18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m */; };
+		0E55F6CA18F2A40800344578 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E55F6C818F2A40800344578 /* 07-map-marker.png */; };
+		0E55F6CB18F2A40800344578 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E55F6C918F2A40800344578 /* 11-clock.png */; };
 		0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +82,8 @@
 		0E1C692718E8AD4200563AC7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0E1F60DC18EC180300A73DE0 /* ETSViewLocatinosMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSViewLocatinosMapViewController.h; sourceTree = "<group>"; };
 		0E1F60DD18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewLocatinosMapViewController.m; sourceTree = "<group>"; };
+		0E55F6C818F2A40800344578 /* 07-map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker.png"; sourceTree = "<group>"; };
+		0E55F6C918F2A40800344578 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
 		0EAC616518F1BE390061CA0D /* ETSViewTimeCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSViewTimeCardsTableViewController.h; sourceTree = "<group>"; };
 		0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewTimeCardsTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,6 +179,8 @@
 		0E1C68E018E85FBA00563AC7 /* EmployeeTimeSheet */ = {
 			isa = PBXGroup;
 			children = (
+				0E55F6C818F2A40800344578 /* 07-map-marker.png */,
+				0E55F6C918F2A40800344578 /* 11-clock.png */,
 				0E1C691918E8939800563AC7 /* Views */,
 				0E1C691818E8938500563AC7 /* Controllers */,
 				0E1C691718E881DF00563AC7 /* Model */,
@@ -368,7 +374,9 @@
 			files = (
 				0E1C68E518E85FBA00563AC7 /* InfoPlist.strings in Resources */,
 				0E1C692218E8963A00563AC7 /* iPad.storyboard in Resources */,
+				0E55F6CA18F2A40800344578 /* 07-map-marker.png in Resources */,
 				0E1C68F018E85FBA00563AC7 /* Images.xcassets in Resources */,
+				0E55F6CB18F2A40800344578 /* 11-clock.png in Resources */,
 				0E1C692418E8964E00563AC7 /* iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

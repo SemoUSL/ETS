@@ -8,6 +8,7 @@
 
 #import "ETSAddTimeCardViewController.h"
 #import "Location.h"
+#import "TimeCard.h"
 
 @interface ETSAddTimeCardViewController ()
 
@@ -77,7 +78,22 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-- (IBAction)saveOldTimeCard:(UIBarButtonItem *)sender {
+-(BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    return [textField resignFirstResponder];
+}
+- (IBAction)saveTimeCard:(UIBarButtonItem *)sender {
+    
+    //get location
+    Location* loc = [fetchedesultsController.fetchedObjects objectAtIndex:[pvLocations selectedRowInComponent:0]];
+    
+    [TimeCard BuildByCheckIn:[self.dpCheckIn date] location:loc comment:self.tfComment .text manual:YES inContext:context];
+    NSError * error;
+    [context save:&error];
+    if (error) {
+        NSLog(@"ERR:%@",error);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 @end
