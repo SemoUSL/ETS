@@ -53,6 +53,24 @@
 {
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"TimeCard" inManagedObjectContext:context];
     self = (TimeCard*)[super initWithEntity:entity insertIntoManagedObjectContext:context];
+//    self.context = context;
     return self;
+}
+#pragma mark - Check out.
+-(BOOL) setCheckOutInContext:(NSManagedObjectContext*)context
+{
+    // validating the check in and out
+    // check in must not be nil
+    // check out must be nil
+    BOOL valid=( self.checkIn && !self.checkOut);
+    if (valid){
+        //set checkout date time Now.
+        self.checkOut = [NSDate date];
+        
+        // save
+        [context save:nil];
+
+    }
+    return valid;
 }
 @end

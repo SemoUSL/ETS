@@ -42,7 +42,10 @@
         NSLog(@"Can not fetch Locations ERORR::::%@",error);
         exit(1);
     }
-
+    // add gesture recognizer to the table view  to check out.
+    UILongPressGestureRecognizer * lpgrCheckOut = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(checkOut:)];
+    [self.tableView addGestureRecognizer:lpgrCheckOut];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -67,59 +70,52 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Create and initialize the fetch results controller.
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:@"location.name" cacheName:nil];
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
 }
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    
-    
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:YES];
-            break;
-            
-            //        case NSFetchedResultsChangeDelete:
-            //            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            //            break;
-            //
-            //        case NSFetchedResultsChangeUpdate:
-            //            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            //            break;
-            //
-            //        case NSFetchedResultsChangeMove:
-            //            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            //            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            //            break;
-    }
-}
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark - Gesture Recognizer
+-(void)checkOut:(UIGestureRecognizer *)gestureRecognizer {
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        // getting the affected cell indexPath.
+        CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+//        UITableViewCell* activCell = [self.tableView cellForRowAtIndexPath:indexPath];
+        TimeCard* activeTimeCard = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [activeTimeCard setCheckOutInContext:context];
+        
+    }
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    
+    return self.fetchedResultsController.sections.count;
+    
+}
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+   return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [[self.fetchedResultsController fetchedObjects] count];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -135,17 +131,78 @@
 {
     TimeCard* tc = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"MM-DD HH:mm:ss";
-    [formatter setDateStyle:NSDateFormatterShortStyle];
+    formatter.dateFormat = @"MM-dd HH:mm";
+//    [formatter setDateStyle:NSDateFormatterShortStyle];
 
-    cell.textLabel.text = [formatter stringFromDate: tc.checkIn];
-    if (tc.checkOut) {
-    cell.detailTextLabel.text = [formatter stringFromDate:tc.checkOut];
+    cell.textLabel.text = [NSString stringWithFormat: @"In:%@", [formatter stringFromDate:tc.checkIn]];
+    if (tc.checkOut)
+    {
+            formatter.dateFormat = @"HH:mm";
+        cell.textLabel.text =[cell.textLabel.text  stringByAppendingString: [NSString stringWithFormat: @"-Out:%@", [formatter stringFromDate:tc.checkOut]]];
+                cell.backgroundColor = [UIColor lightTextColor];
     }
     else
     {
-     cell.detailTextLabel.text = @"check out";
+    cell.textLabel.text = [cell.textLabel.text  stringByAppendingString: @" -Out: Current"];
+        cell.backgroundColor = [UIColor lightGrayColor];
     }
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Comment: %@", tc.comment?tc.comment:@"No Comment!"];
+}
+
+
+/*
+ NSFetchedResultsController delegate methods to respond to additions, removals and so on.
+ */
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type{
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.tableView endUpdates];
 }
 
 

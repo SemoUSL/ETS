@@ -11,11 +11,12 @@
 @interface ETSViewLocatinosMapViewController ()
 @property(strong,nonatomic) NSManagedObjectContext * context;
 @property (strong,nonatomic)NSFetchedResultsController* fetchedResultsController;
+@property (strong,nonatomic) CLLocationManager * locationManager;
 
 @end
 
 @implementation ETSViewLocatinosMapViewController
-@synthesize context;
+@synthesize context,locationManager;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,7 +44,15 @@
             [self addMapAnnotationForLocation:loc];
         }
     }
-    // Do any additional setup after loading the view.
+    self.tabBarController.delegate =self;
+
+    //insialise locationManager
+    locationManager = [[CLLocationManager alloc]init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLLocationAccuracyHundredMeters;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    
 }
 - (NSFetchedResultsController *)fetchedResultsController {
     
@@ -153,6 +162,7 @@
     MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
     circleView.strokeColor = [UIColor blueColor];
     circleView.lineWidth = 2;
+    
     return circleView;
 }
 
@@ -180,6 +190,75 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         exit(1);
     }
+    [self registerRegionForLocation:location];
 
 }
+#pragma mark - Regions
+-(void) registerRegionForLocation:(Location*)location
+{
+    CLLocationDegrees radius = [location.range doubleValue];
+    if (radius > locationManager.maximumRegionMonitoringDistance) {
+        radius = locationManager.maximumRegionMonitoringDistance;
+    }
+    
+    // Create the geographic region to be monitored.
+    CLCircularRegion *geoRegion = [[CLCircularRegion alloc]
+                                   initWithCenter: CLLocationCoordinate2DMake([location.latitude doubleValue], [location.longitude doubleValue])
+                                   radius:radius
+                                   identifier:location.name];
+    [locationManager startMonitoringForRegion:geoRegion];
+}
+#pragma mark - Tab Bar Controller handlers
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    if ([viewController.tabBarItem.title isEqualToString:@"TimeSheet"])
+    {
+        //check if there is no locatoins don't open the timesheet view controller.
+        if( self.fetchedResultsController.fetchedObjects.count==0)
+        {
+             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"You need first to add at least one location!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add Location", nil];
+        [alert show];
+            return NO;
+        }
+        
+    }
+    return YES;
+}
+
+#pragma mark Alet view handler
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString * title = [alertView buttonTitleAtIndex:buttonIndex];
+    if([title isEqualToString:@"Add Location"]&&![self.navigationController.visibleViewController isKindOfClass:[ETSAddLocationViewController class]] )
+    {
+      ETSAddLocationViewController  *addViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ETSAddLocationViewController"];
+        addViewController.delegate = self;
+        
+      
+            // create a new location and pass it to Addviewcontroller.
+            addViewController.context  = self.fetchedResultsController.managedObjectContext;
+            
+
+        [self.navigationController pushViewController:addViewController animated:YES];
+    }
+}
+#pragma mark - Location manager delegate
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region  {
+    NSString *event = [NSString stringWithFormat:@"didEnterRegion %@ at %@", region.identifier, [NSDate date]];
+    
+     UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:event delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+//    [self updateWithEvent:event];
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    NSString *event = [NSString stringWithFormat:@"didExitRegion %@ at %@", region.identifier, [NSDate date]];
+    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:event delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+//    [self updateWithEvent:event];
+}
+
+
 @end

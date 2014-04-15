@@ -35,6 +35,7 @@
 		0E55F6CA18F2A40800344578 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E55F6C818F2A40800344578 /* 07-map-marker.png */; };
 		0E55F6CB18F2A40800344578 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E55F6C918F2A40800344578 /* 11-clock.png */; };
 		0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */; };
+		0EE3E44918F421600066F214 /* ETSTimaCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE3E44818F421600066F214 /* ETSTimaCardCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,8 @@
 		0E55F6C918F2A40800344578 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
 		0EAC616518F1BE390061CA0D /* ETSViewTimeCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSViewTimeCardsTableViewController.h; sourceTree = "<group>"; };
 		0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewTimeCardsTableViewController.m; sourceTree = "<group>"; };
+		0EE3E44718F421600066F214 /* ETSTimaCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSTimaCardCell.h; sourceTree = "<group>"; };
+		0EE3E44818F421600066F214 /* ETSTimaCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSTimaCardCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,13 +182,13 @@
 		0E1C68E018E85FBA00563AC7 /* EmployeeTimeSheet */ = {
 			isa = PBXGroup;
 			children = (
-				0E55F6C818F2A40800344578 /* 07-map-marker.png */,
-				0E55F6C918F2A40800344578 /* 11-clock.png */,
 				0E1C691918E8939800563AC7 /* Views */,
 				0E1C691818E8938500563AC7 /* Controllers */,
 				0E1C691718E881DF00563AC7 /* Model */,
 				0E1C690D18E85FDD00563AC7 /* AppDelegate */,
 				0E1C68EF18E85FBA00563AC7 /* Images.xcassets */,
+				0E55F6C818F2A40800344578 /* 07-map-marker.png */,
+				0E55F6C918F2A40800344578 /* 11-clock.png */,
 				0E1C68EC18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld */,
 				0E1C68E118E85FBA00563AC7 /* Supporting Files */,
 			);
@@ -282,6 +285,8 @@
 		0EAC616418F1BDEF0061CA0D /* ViewTimeCards */ = {
 			isa = PBXGroup;
 			children = (
+				0EE3E44718F421600066F214 /* ETSTimaCardCell.h */,
+				0EE3E44818F421600066F214 /* ETSTimaCardCell.m */,
 				0EAC616518F1BE390061CA0D /* ETSViewTimeCardsTableViewController.h */,
 				0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */,
 			);
@@ -401,6 +406,7 @@
 				0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */,
 				0E1C691618E881D700563AC7 /* Manager.m in Sources */,
 				0E1C691318E881D700563AC7 /* Location.m in Sources */,
+				0EE3E44918F421600066F214 /* ETSTimaCardCell.m in Sources */,
 				0E1C68EB18E85FBA00563AC7 /* ETSAppDelegate.m in Sources */,
 				0E1C691018E881D300563AC7 /* TimeCard.m in Sources */,
 				0E1C68EE18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld in Sources */,
@@ -482,7 +488,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -515,7 +521,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -531,9 +537,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EmployeeTimeSheet/EmployeeTimeSheet-Prefix.pch";
 				INFOPLIST_FILE = "EmployeeTimeSheet/EmployeeTimeSheet-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -548,9 +555,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EmployeeTimeSheet/EmployeeTimeSheet-Prefix.pch";
 				INFOPLIST_FILE = "EmployeeTimeSheet/EmployeeTimeSheet-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

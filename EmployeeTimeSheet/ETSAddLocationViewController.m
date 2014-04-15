@@ -41,7 +41,7 @@
     
     UILongPressGestureRecognizer* lpgr = [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 2.0f; //user needs to press for 2 seconds
+    lpgr.minimumPressDuration = 1.0f; //user needs to press for 2 seconds
 //    lpgr.delegate = self;
     [self.map addGestureRecognizer:lpgr];
     // Do any additional setup after loading the view.
@@ -211,6 +211,10 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (IBAction)sldRangeValueChanged:(UISlider *)sender {
+    self.lblRabgeValue.text = [NSString stringWithFormat:@"%i",(int)sender.value];
+}
 
 - (IBAction)saveLocation:(UIBarButtonItem *)sender
 {

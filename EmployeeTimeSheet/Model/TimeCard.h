@@ -21,4 +21,5 @@
 @property (nonatomic, retain) NSManagedObject *location;
 
 + (TimeCard *)BuildByCheckIn:(NSDate*)checkInTime location:(Location*)checkInlocatoin comment:(NSString*)checkInComment manual:(BOOL)isManual inContext:(NSManagedObjectContext*) context;
+-(BOOL) setCheckOutInContext:(NSManagedObjectContext*)context;
 @end

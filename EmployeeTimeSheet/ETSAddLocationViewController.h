@@ -24,6 +24,7 @@
 @property (weak, nonatomic) id <AddLocationDelegate> delegate;
 @property (strong, nonatomic) Location * location;
 @property(weak ,nonatomic)  NSManagedObjectContext* context;
+- (IBAction)sldRangeValueChanged:(UISlider *)sender;
 
 - (IBAction)saveLocation:(UIBarButtonItem *)sender;
 

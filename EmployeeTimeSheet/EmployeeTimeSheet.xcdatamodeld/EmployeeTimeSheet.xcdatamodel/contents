@@ -20,11 +20,12 @@
         <attribute name="checkOut" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="manualUpdated" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="paid" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="timeCard" inverseEntity="Location" syncable="YES"/>
     </entity>
     <elements>
         <element name="Location" positionX="0" positionY="0" width="128" height="150"/>
         <element name="Manager" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="TimeCard" positionX="0" positionY="0" width="128" height="118"/>
+        <element name="TimeCard" positionX="0" positionY="0" width="128" height="135"/>
     </elements>
 </model>
