@@ -7,6 +7,7 @@
 //
 #import "ETSAppDelegate.h"
 #import "ETSViewLocatinosMapViewController.h"
+#import "LocationMonitor.h"
 
 @interface ETSViewLocatinosMapViewController ()
 @property(strong,nonatomic) NSManagedObjectContext * context;
@@ -244,6 +245,16 @@
     }
 }
 #pragma mark - Location manager delegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    MKCoordinateRegion region = { { 0.0f, 0.0f }, { 0.0f, 0.0f } };
+    
+    region.center = ((CLLocation*)[locations lastObject]).coordinate;
+    region.span.longitudeDelta = 0.15f;
+    region.span.latitudeDelta = 0.15f;
+    [self.map setRegion:region animated:YES];
+}
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region  {
     NSString *event = [NSString stringWithFormat:@"didEnterRegion %@ at %@", region.identifier, [NSDate date]];
     

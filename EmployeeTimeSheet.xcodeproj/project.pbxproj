@@ -34,6 +34,7 @@
 		0E1F60DE18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F60DD18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m */; };
 		0E55F6CA18F2A40800344578 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E55F6C818F2A40800344578 /* 07-map-marker.png */; };
 		0E55F6CB18F2A40800344578 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E55F6C918F2A40800344578 /* 11-clock.png */; };
+		0E6C213218FDCFF400B71E34 /* LocationMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6C213118FDCFF400B71E34 /* LocationMonitor.m */; };
 		0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */; };
 		0EE3E44918F421600066F214 /* ETSTimaCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE3E44818F421600066F214 /* ETSTimaCardCell.m */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,8 @@
 		0E1F60DD18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewLocatinosMapViewController.m; sourceTree = "<group>"; };
 		0E55F6C818F2A40800344578 /* 07-map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker.png"; sourceTree = "<group>"; };
 		0E55F6C918F2A40800344578 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
+		0E6C213018FDCFF400B71E34 /* LocationMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationMonitor.h; sourceTree = "<group>"; };
+		0E6C213118FDCFF400B71E34 /* LocationMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMonitor.m; sourceTree = "<group>"; };
 		0EAC616518F1BE390061CA0D /* ETSViewTimeCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSViewTimeCardsTableViewController.h; sourceTree = "<group>"; };
 		0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewTimeCardsTableViewController.m; sourceTree = "<group>"; };
 		0EE3E44718F421600066F214 /* ETSTimaCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSTimaCardCell.h; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 		0E04FC9D18ED990800ACCC93 /* Locations */ = {
 			isa = PBXGroup;
 			children = (
+				0E6C212F18FDCFA300B71E34 /* LocatonMonitor */,
 				0E1F60DB18EC17A200A73DE0 /* ViewLocationsMap */,
 				0E1F60DA18EC178000A73DE0 /* AddLocation */,
 			);
@@ -282,6 +286,15 @@
 			name = ViewLocationsMap;
 			sourceTree = "<group>";
 		};
+		0E6C212F18FDCFA300B71E34 /* LocatonMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				0E6C213018FDCFF400B71E34 /* LocationMonitor.h */,
+				0E6C213118FDCFF400B71E34 /* LocationMonitor.m */,
+			);
+			name = LocatonMonitor;
+			sourceTree = "<group>";
+		};
 		0EAC616418F1BDEF0061CA0D /* ViewTimeCards */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,6 +423,7 @@
 				0E1C68EB18E85FBA00563AC7 /* ETSAppDelegate.m in Sources */,
 				0E1C691018E881D300563AC7 /* TimeCard.m in Sources */,
 				0E1C68EE18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld in Sources */,
+				0E6C213218FDCFF400B71E34 /* LocationMonitor.m in Sources */,
 				0E1F60DE18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m in Sources */,
 				0E1C692018E895F100563AC7 /* ETSAddLocationViewController.m in Sources */,
 			);
