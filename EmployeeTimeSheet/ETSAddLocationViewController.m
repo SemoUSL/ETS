@@ -12,14 +12,15 @@
 #import "Manager.h"
 @interface ETSAddLocationViewController ()
 {
-    MKPointAnnotation * pin;
-    MKCircle *circle;
+    MKPointAnnotation * newPin;
+    MKCircle *newCircle;
     __block NSString * _address;
 }
-
+@property(strong,nonatomic) NSFetchedResultsController * fetchedResultsController;
 @end
 
 @implementation ETSAddLocationViewController
+@synthesize context;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,15 +37,52 @@
     self.tfLocationName.placeholder = @"Enter Location Name";
         self.tfAddress.placeholder = @"Search for Location";
 //    [self.map setMapType:MKMapTypeHybrid];
-    pin = [[MKPointAnnotation alloc] init];
-    circle = [[MKCircle alloc] init];
+    newPin = [[MKPointAnnotation alloc] init];
+    newCircle = [[MKCircle alloc] init];
     
     UILongPressGestureRecognizer* lpgr = [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
     lpgr.minimumPressDuration = 1.0f; //user needs to press for 2 seconds
 //    lpgr.delegate = self;
     [self.map addGestureRecognizer:lpgr];
-    // Do any additional setup after loading the view.
+
+    //load saved locations.
+    NSError * error;
+    [self.fetchedResultsController performFetch:&error];
+    if (error) {
+        NSLog(@"Can not fetch Locations ERORR::::%@",error);
+        exit(1);
+    }
+    else
+    {
+       
+        //add the fetched locations to the map.
+        for (Location* loc in self.fetchedResultsController.fetchedObjects) {
+            [self addMapAnnotationForLocation:loc];
+        }
+    }
+    
+}
+-(void)addMapAnnotationForLocation:(Location*)location{
+    
+    
+    CLLocationCoordinate2D point = CLLocationCoordinate2DMake((CLLocationDegrees)[location.latitude doubleValue], (CLLocationDegrees)[location.longitude doubleValue]);
+    
+    
+    [self addMapOverLay:point radius:[location.range integerValue]];
+    MKPointAnnotation * pin = [[MKPointAnnotation alloc]init];
+    pin.coordinate = point;
+    pin.title = location.name;
+    pin.subtitle = location.address;
+    [self.map addAnnotation:pin];
+    
+    
+    
+}
+- (void)addMapOverLay:(CLLocationCoordinate2D)point radius:(NSInteger) radius{
+    MKCircle *circle=[ MKCircle circleWithCenterCoordinate:point radius:radius];
+    [self.map addOverlay:circle];
+    [self.map reloadInputViews];
 }
 
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
@@ -69,12 +107,8 @@
 }
 - (void)addMapOverLay:(CLLocationCoordinate2D)point
 {
-    if(circle)
-    {
-        [self.map removeOverlay:circle];
-    }
-    circle=[MKCircle circleWithCenterCoordinate:point radius:self.sldRange.value];
-    [self.map addOverlay:circle];
+    [self.map addOverlay:newCircle?newCircle:[MKCircle circleWithCenterCoordinate:point radius:self.sldRange.value]];
+    [self.map reloadInputViews];
 }
 
 - (void)AddMapAnnotation:(CLLocationCoordinate2D)point
@@ -82,10 +116,10 @@
     //             CLLocationCoordinate2D pointt = region.center;
     
     [self addMapOverLay:point];
-    pin.coordinate = point;
-    pin.title = self.tfLocationName.text.length>0?self.tfLocationName.text:@"Location Name";
-    pin.subtitle = [NSString stringWithFormat:@"latlon: %f  %f",pin.coordinate.latitude,pin.coordinate.longitude];
-    [self.map addAnnotation:pin];
+    newPin.coordinate = point;
+    newPin.title = self.tfLocationName.text.length>0?self.tfLocationName.text:@"Location Name";
+    newPin.subtitle = [NSString stringWithFormat:@"latlon: %f  %f",newPin.coordinate.latitude,newPin.coordinate.longitude];
+    [self.map addAnnotation:newPin];
     [self reverseGeoForLatitude:point.latitude andLongitude:point.longitude];
 }
 
@@ -95,7 +129,7 @@
     
     [textField resignFirstResponder];
     if ([textField isEqual:self.tfLocationName]) {
-        pin.title = self.tfLocationName.text.length>0?self.tfLocationName.text:@"Location Name";
+        newPin.title = self.tfLocationName.text.length>0?self.tfLocationName.text:@"Location Name";
     }
     else if ([textField isEqual:self.tfAddress])
     {
@@ -154,7 +188,7 @@
     if (pav == nil)
     {
         pav = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseId];
-        pav.draggable = YES;
+        pav.draggable = NO;
         pav.canShowCallout = YES;
     }
     else
@@ -165,17 +199,17 @@
     return pav;
 }
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState
-{
-    if (newState == MKAnnotationViewDragStateEnding || newState == MKAnnotationViewDragStateDragging)
-    {
-        CLLocationCoordinate2D droppedAt = annotationView.annotation.coordinate;
-        pin.title = self.tfLocationName.text.length>0?self.tfLocationName.text:@"Location Name";
-        pin.subtitle = [NSString stringWithFormat:@"latlon: %f  %f",droppedAt.latitude,droppedAt.longitude];
-        [self addMapOverLay:droppedAt];
-        //        NSLog(@"dropped at %f,%f", droppedAt.latitude, droppedAt.longitude);
-    }
-}
+//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState
+//{
+//    if (newState == MKAnnotationViewDragStateEnding || newState == MKAnnotationViewDragStateDragging)
+//    {
+//        CLLocationCoordinate2D droppedAt = annotationView.annotation.coordinate;
+//        newPin.title = self.tfLocationName.text.length>0?self.tfLocationName.text:@"Location Name";
+//        newPin.subtitle = [NSString stringWithFormat:@"latlon: %f  %f",droppedAt.latitude,droppedAt.longitude];
+//        [self addMapOverLay:droppedAt];
+//        //        NSLog(@"dropped at %f,%f", droppedAt.latitude, droppedAt.longitude);
+//    }
+//}
 
 -(void)reverseGeoForLatitude:(CLLocationDegrees) latitude andLongitude: (CLLocationDegrees)longitude
 {
@@ -211,6 +245,30 @@
  // Pass the selected object to the new view controller.
  }
  */
+- (NSFetchedResultsController *)fetchedResultsController {
+    
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    // Create and configure a fetch request with the Book entity.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    // Create the sort descriptors array.
+    
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sortDescriptors = @[nameDescriptor];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Create and initialize the fetch results controller.
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+//    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
+}
+
 
 - (IBAction)sldRangeValueChanged:(UISlider *)sender {
     self.lblRabgeValue.text = [NSString stringWithFormat:@"%i",(int)sender.value];
@@ -218,13 +276,13 @@
 
 - (IBAction)saveLocation:(UIBarButtonItem *)sender
 {
-    if(self.tfLocationName.text.length>0 && !(pin.coordinate.latitude == 0 && pin.coordinate.longitude ==0))
+    if(self.tfLocationName.text.length>0 && !(newPin.coordinate.latitude == 0 && newPin.coordinate.longitude ==0))
     {
         self.location = [Location findOrBuildByLatitude:0 longitude:0 inContext:self.context];
         self.location.name     = self.tfLocationName.text;
         self.location.range    = [NSNumber numberWithFloat: self.sldRange.value];
-        self.location.latitude = [NSNumber numberWithDouble:pin.coordinate.latitude];
-        self.location.longitude= [NSNumber numberWithDouble:pin.coordinate.longitude];
+        self.location.latitude = [NSNumber numberWithDouble:newPin.coordinate.latitude];
+        self.location.longitude= [NSNumber numberWithDouble:newPin.coordinate.longitude];
         self.location.address = _address;
         [self.delegate addLocation:self.location withSave:YES];
         [self.navigationController popViewControllerAnimated:YES];

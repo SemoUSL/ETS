@@ -19,8 +19,8 @@
                                     <outlet property="delegate" destination="vSp-DT-VtB" id="5TC-ur-yHc"/>
                                 </connections>
                             </mapView>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="10" maxValue="1000" id="pWJ-DR-4sr">
-                                <rect key="frame" x="-2" y="168" width="324" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="10" maxValue="500" id="pWJ-DR-4sr">
+                                <rect key="frame" x="18" y="168" width="284" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="sldRangeValueChanged:" destination="vSp-DT-VtB" eventType="valueChanged" id="SaE-rJ-qLn"/>
@@ -63,21 +63,28 @@
                                     <outlet property="delegate" destination="vSp-DT-VtB" id="lUZ-fq-PHc"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EO8-0d-2vg">
+                                <rect key="frame" x="177" y="139" width="89" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Set Manager">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="83X-tg-DX4" kind="push" id="3aK-bd-fdu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="wTx-nn-N72">
-                        <barButtonItem key="leftBarButtonItem" title="Set Manager" id="Hjs-uz-dVb">
-                            <connections>
-                                <segue destination="83X-tg-DX4" kind="push" id="4yj-rl-19H"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Mc1-aI-aif">
                             <connections>
                                 <action selector="saveLocation:" destination="vSp-DT-VtB" id="KJZ-Up-QLi"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="btnSaveLocation" destination="Mc1-aI-aif" id="qbw-gF-Nzx"/>
                         <outlet property="lblRabgeValue" destination="xZt-Rn-5nU" id="NiM-I2-Mo3"/>
@@ -107,12 +114,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="pLb-RL-xDy">
-                        <barButtonItem key="leftBarButtonItem" title="AddManager" id="QkO-ts-2cG">
+                        <barButtonItem key="rightBarButtonItem" title="AddManager" id="QkO-ts-2cG">
                             <connections>
                                 <segue destination="xpu-Pi-bqh" kind="push" id="r7h-wZ-jW3"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Z92-uN-Wnd"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hlf-k2-NJw" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -36,7 +36,8 @@
 #pragma mark - Location manager delegate
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kETSLocationChangeNotification object:nil userInfo:[NSDictionary dictionaryWithObject:[locations lastObject] forKey:@"location"]];
+    NSLog(@"Locatons:\n%@",locations);
+    [[NSNotificationCenter defaultCenter] postNotificationName:kETSLocationChangeNotification object:nil userInfo:[NSDictionary dictionaryWithObject:locations forKey:@"locations"]];
 
 }
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region

@@ -19,7 +19,7 @@
 
 @end
 
-@interface ETSViewLocatinosMapViewController : UIViewController<MKMapViewDelegate, AddLocationDelegate,NSFetchedResultsControllerDelegate,UITabBarControllerDelegate,UIAlertViewDelegate,CLLocationManagerDelegate>
+@interface ETSViewLocatinosMapViewController : UIViewController<MKMapViewDelegate, AddLocationDelegate,NSFetchedResultsControllerDelegate,UITabBarControllerDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *map;
 
 @end

@@ -20,7 +20,15 @@
 //    // Override point for customization after application launch.
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
+    
+    //respond to notification
     return YES;
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    //respond to notification
+//    notification 
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

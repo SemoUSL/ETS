@@ -36,6 +36,10 @@
 		0E55F6CB18F2A40800344578 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E55F6C918F2A40800344578 /* 11-clock.png */; };
 		0E6C213218FDCFF400B71E34 /* LocationMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6C213118FDCFF400B71E34 /* LocationMonitor.m */; };
 		0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */; };
+		0EC4A0DB1903A02B00B4E07E /* SDCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4A0D41903A02B00B4E07E /* SDCoreDataController.m */; };
+		0EC4A0DC1903A02B00B4E07E /* NSManagedObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4A0D61903A02B00B4E07E /* NSManagedObject+JSON.m */; };
+		0EC4A0DD1903A02B00B4E07E /* SDAFParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4A0D81903A02B00B4E07E /* SDAFParseAPIClient.m */; };
+		0EC4A0DE1903A02B00B4E07E /* SDSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4A0DA1903A02B00B4E07E /* SDSyncEngine.m */; };
 		0EE3E44918F421600066F214 /* ETSTimaCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE3E44818F421600066F214 /* ETSTimaCardCell.m */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +94,14 @@
 		0E6C213118FDCFF400B71E34 /* LocationMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMonitor.m; sourceTree = "<group>"; };
 		0EAC616518F1BE390061CA0D /* ETSViewTimeCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSViewTimeCardsTableViewController.h; sourceTree = "<group>"; };
 		0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSViewTimeCardsTableViewController.m; sourceTree = "<group>"; };
+		0EC4A0D31903A02B00B4E07E /* SDCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCoreDataController.h; sourceTree = "<group>"; };
+		0EC4A0D41903A02B00B4E07E /* SDCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCoreDataController.m; sourceTree = "<group>"; };
+		0EC4A0D51903A02B00B4E07E /* NSManagedObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+JSON.h"; sourceTree = "<group>"; };
+		0EC4A0D61903A02B00B4E07E /* NSManagedObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+JSON.m"; sourceTree = "<group>"; };
+		0EC4A0D71903A02B00B4E07E /* SDAFParseAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAFParseAPIClient.h; sourceTree = "<group>"; };
+		0EC4A0D81903A02B00B4E07E /* SDAFParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAFParseAPIClient.m; sourceTree = "<group>"; };
+		0EC4A0D91903A02B00B4E07E /* SDSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncEngine.h; sourceTree = "<group>"; };
+		0EC4A0DA1903A02B00B4E07E /* SDSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncEngine.m; sourceTree = "<group>"; };
 		0EE3E44718F421600066F214 /* ETSTimaCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETSTimaCardCell.h; sourceTree = "<group>"; };
 		0EE3E44818F421600066F214 /* ETSTimaCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ETSTimaCardCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,14 +198,10 @@
 		0E1C68E018E85FBA00563AC7 /* EmployeeTimeSheet */ = {
 			isa = PBXGroup;
 			children = (
+				0E1C691718E881DF00563AC7 /* Model */,
 				0E1C691918E8939800563AC7 /* Views */,
 				0E1C691818E8938500563AC7 /* Controllers */,
-				0E1C691718E881DF00563AC7 /* Model */,
 				0E1C690D18E85FDD00563AC7 /* AppDelegate */,
-				0E1C68EF18E85FBA00563AC7 /* Images.xcassets */,
-				0E55F6C818F2A40800344578 /* 07-map-marker.png */,
-				0E55F6C918F2A40800344578 /* 11-clock.png */,
-				0E1C68EC18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld */,
 				0E1C68E118E85FBA00563AC7 /* Supporting Files */,
 			);
 			path = EmployeeTimeSheet;
@@ -202,6 +210,10 @@
 		0E1C68E118E85FBA00563AC7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0E1C68EF18E85FBA00563AC7 /* Images.xcassets */,
+				0E55F6C818F2A40800344578 /* 07-map-marker.png */,
+				0E55F6C918F2A40800344578 /* 11-clock.png */,
+				0E1C68EC18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld */,
 				0E1C68E218E85FBA00563AC7 /* EmployeeTimeSheet-Info.plist */,
 				0E1C68E318E85FBA00563AC7 /* InfoPlist.strings */,
 				0E1C68E618E85FBA00563AC7 /* main.m */,
@@ -253,6 +265,7 @@
 		0E1C691818E8938500563AC7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0EC4A0D219039F6B00B4E07E /* Synch */,
 				0E04FC9E18ED992100ACCC93 /* TimeCards */,
 				0E04FC9D18ED990800ACCC93 /* Locations */,
 			);
@@ -304,6 +317,21 @@
 				0EAC616618F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m */,
 			);
 			name = ViewTimeCards;
+			sourceTree = "<group>";
+		};
+		0EC4A0D219039F6B00B4E07E /* Synch */ = {
+			isa = PBXGroup;
+			children = (
+				0EC4A0D31903A02B00B4E07E /* SDCoreDataController.h */,
+				0EC4A0D41903A02B00B4E07E /* SDCoreDataController.m */,
+				0EC4A0D51903A02B00B4E07E /* NSManagedObject+JSON.h */,
+				0EC4A0D61903A02B00B4E07E /* NSManagedObject+JSON.m */,
+				0EC4A0D71903A02B00B4E07E /* SDAFParseAPIClient.h */,
+				0EC4A0D81903A02B00B4E07E /* SDAFParseAPIClient.m */,
+				0EC4A0D91903A02B00B4E07E /* SDSyncEngine.h */,
+				0EC4A0DA1903A02B00B4E07E /* SDSyncEngine.m */,
+			);
+			name = Synch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,13 +444,17 @@
 			files = (
 				0E04FCA218ED995C00ACCC93 /* ETSAddTimeCardViewController.m in Sources */,
 				0E1C68E718E85FBA00563AC7 /* main.m in Sources */,
+				0EC4A0DB1903A02B00B4E07E /* SDCoreDataController.m in Sources */,
+				0EC4A0DE1903A02B00B4E07E /* SDSyncEngine.m in Sources */,
 				0EAC616718F1BE390061CA0D /* ETSViewTimeCardsTableViewController.m in Sources */,
 				0E1C691618E881D700563AC7 /* Manager.m in Sources */,
 				0E1C691318E881D700563AC7 /* Location.m in Sources */,
 				0EE3E44918F421600066F214 /* ETSTimaCardCell.m in Sources */,
+				0EC4A0DC1903A02B00B4E07E /* NSManagedObject+JSON.m in Sources */,
 				0E1C68EB18E85FBA00563AC7 /* ETSAppDelegate.m in Sources */,
 				0E1C691018E881D300563AC7 /* TimeCard.m in Sources */,
 				0E1C68EE18E85FBA00563AC7 /* EmployeeTimeSheet.xcdatamodeld in Sources */,
+				0EC4A0DD1903A02B00B4E07E /* SDAFParseAPIClient.m in Sources */,
 				0E6C213218FDCFF400B71E34 /* LocationMonitor.m in Sources */,
 				0E1F60DE18EC180300A73DE0 /* ETSViewLocatinosMapViewController.m in Sources */,
 				0E1C692018E895F100563AC7 /* ETSAddLocationViewController.m in Sources */,

@@ -35,7 +35,7 @@
     return timeCard;
     
 }
-+(BOOL)isAtWorkInContext:(NSManagedObjectContext*) context
++(TimeCard*)isAtWorkInContext:(NSManagedObjectContext*) context
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"TimeCard"];
     fetchRequest.fetchLimit = 1;
@@ -44,9 +44,9 @@
     NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
     
     if (results.count > 0) {
-        return YES;
+        return results[0];
     }
-    return NO;
+    return nil;
 
 }
 - (id)initWithContext:(NSManagedObjectContext *)context

@@ -29,10 +29,14 @@
 - (void)removeTimeCardObject:(TimeCard *)value;
 - (void)addTimeCard:(NSSet *)values;
 - (void)removeTimeCard:(NSSet *)values;
-
++ (Location*)findByName:(NSString*)name context:(NSManagedObjectContext *)context;
 + (Location *)findOrBuildByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude inContext:(NSManagedObjectContext *)context;
 + (NSFetchedResultsController*) getLocationsIncontext:(NSManagedObjectContext*)context;
 - (id)initWithContext:(NSManagedObjectContext *)context;
+-(double) distanceFromLatitude:(CLLocationDegrees)latitude andLongitude:(CLLocationDegrees)longitude;
+-(CLLocation*)geoLocation;
+
+
 //- (void)unpackDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
 
