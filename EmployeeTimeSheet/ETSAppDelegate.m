@@ -7,6 +7,7 @@
 //
 
 #import "ETSAppDelegate.h"
+#import <Parse/Parse.h>
 
 @implementation ETSAppDelegate
 
@@ -16,19 +17,42 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    // Override point for customization after application launch.
-//    self.window.backgroundColor = [UIColor whiteColor];
-//    [self.window makeKeyAndVisible];
+    [Parse setApplicationId:@"KZ8poNamC1CQaoNmwveZWgyEc0KjoRgKiOFwKPAm"
+                  clientKey:@"5xAb9RL5pSxFIhueU8xqkddqJiq0PEaQmatYhCIi"];
     
-    //respond to notification
+    
+    //setting bundle.
+    
+    [self initializeUserDefaults];
     return YES;
+}
+- (void) initializeUserDefaults {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:nil forKey:@"initialized_defaults"];
+    if (nil == [defaults objectForKey:@"initialized_defaults"])
+    {
+    
+        [defaults setObject:@"9:00" forKey:@"work_start_time_preference"];
+        [defaults setObject:@"17:00" forKey:@"work_end_time_preference"];
+        [defaults setObject:@"13:00" forKey:@"break_start_time_preference"];
+        [defaults setObject:@"14:00" forKey:@"break_end_time_preference"];
+        
+        [defaults setBool:YES forKey:@"work_monday_preference"];
+        [defaults setBool:YES forKey:@"work_tuesday_preference"];
+        [defaults setBool:YES forKey:@"work_wednesday_preference"];
+        [defaults setBool:YES forKey:@"work_thursday_preference"];
+        [defaults setBool:YES forKey:@"work_friday_preference"];
+        [defaults setBool:NO forKey:@"work_saturday_preference"];
+        [defaults setBool:NO forKey:@"work_sunday_preference"];
+        
+        [defaults setObject:@"dummy_value" forKey:@"initialized_defaults"];
+    }
 }
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     //respond to notification
-//    notification 
+    //    notification
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -39,7 +63,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -65,11 +89,11 @@
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
-        } 
+        }
     }
 }
 
@@ -119,7 +143,7 @@
         /*
          Replace this implementation with code to handle the error appropriately.
          
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
          
          Typical reasons for an error here include:
          * The persistent store is not accessible;
@@ -141,7 +165,7 @@
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }    
+    }
     
     return _persistentStoreCoordinator;
 }

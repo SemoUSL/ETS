@@ -16,6 +16,11 @@
 @dynamic comment;
 @dynamic manualUpdated;
 @dynamic location;
+@dynamic syncStatus;
+@dynamic createdAt;
+@dynamic updatedAt;
+@dynamic objectid;
+
 
 
 

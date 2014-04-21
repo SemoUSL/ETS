@@ -9,6 +9,12 @@
 #import "ETSViewLocatinosMapViewController.h"
 #import "LocationMonitor.h"
 #import "TimeCard.h"
+#import "SDSyncEngine.h"
+#import "SDCoreDataController.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "ETSSocial.h"
+
+
 
 #define CHECK_IN_ALERT_TITLE @"Check-In?"
 #define CHECK_OUT_ALERT_TITLE @"Check-Out?"
@@ -29,6 +35,7 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
 @implementation ETSViewLocatinosMapViewController
 {
     MKPointAnnotation * userAnnotation;
+    ETSSocial * socialDelegate;
 }
 @synthesize context;//,locationManager;
 
@@ -42,12 +49,8 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     return self;
 }
 
-- (void)viewDidLoad
+- (void)loadMapRegionsFromCoreData
 {
-    [super viewDidLoad];
-    userAnnotation = [[MKPointAnnotation alloc]init];
-    ETSAppDelegate *appD = [[UIApplication sharedApplication]delegate];
-    context = [appD managedObjectContext];
     NSError* error;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
@@ -65,8 +68,26 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
         for (Location* loc in self.fetchedResultsController.fetchedObjects) {
             [self addMapAnnotationForLocation:loc];
         }
+
     }
-    self.tabBarController.delegate =self;
+}
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    
+    //init social delegate.
+    socialDelegate =[ETSSocial new];
+    socialDelegate.presenterViewController=self;
+    
+    userAnnotation = [[MKPointAnnotation alloc]init];
+//    ETSAppDelegate *appD = [[UIApplication sharedApplication]delegate];
+//    context = [appD managedObjectContext];
+    context = [[SDCoreDataController sharedInstance] masterManagedObjectContext];
+       self.tabBarController.delegate =self;
+    
+    
+    [self loadMapRegionsFromCoreData];
+    
     
 //    // locationManager
 //    self.locationManager.distanceFilter = kCLLocationAccuracyHundredMeters;
@@ -93,6 +114,30 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+//    [self checkSyncStatus];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"SDSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        //reload map data from core data/
+        [self loadMapRegionsFromCoreData];
+    }];
+    [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SDSyncEngineSyncCompleted" object:nil];
+    [[SDSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
+}
+- (void)checkSyncStatus {
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    //    if ([[SDSyncEngine sharedEngine] syncInProgress]) {
+    //        [self replaceRefreshButtonWithActivityIndicator];
+    //    } else {
+    //        [self removeActivityIndicatorFromRefreshButton];
+    //    }
+}
 #pragma mark - fetchedResultsController
 - (NSFetchedResultsController *)fetchedResultsController {
     
@@ -117,8 +162,6 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     
     return _fetchedResultsController;
 }
-
-
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
     
@@ -144,7 +187,6 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     }
 }
 
-
 #pragma mark - map view
 
 -(void)addMapAnnotationForLocation:(Location*)location{
@@ -164,13 +206,11 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     
     
 }
-
 - (void)addMapOverLay:(CLLocationCoordinate2D)point radius:(NSInteger) radius{
     MKCircle *circle=[ MKCircle circleWithCenterCoordinate:point radius:radius];
     [self.map addOverlay:circle];
     [self.map reloadInputViews];
 }
-
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if ([annotation isKindOfClass:[MKUserLocation class]])
     {
@@ -192,7 +232,6 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     
     return pav;
 }
-
 //implement the viewForOverlay delegate method...
 -(MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay
 {
@@ -202,12 +241,10 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     
     return circleView;
 }
-
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     mapView.centerCoordinate = userLocation.coordinate;
 }
-
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // get the destination view controller.
@@ -222,7 +259,6 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
         
     }
 }
-
 #pragma mark - Location delegate
 -(void)addLocation:(Location *)location withSave:(BOOL)save{
     NSError *error;
@@ -231,6 +267,8 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
         exit(1);
     }
     [self registerRegionForLocation:location];
+    [[SDSyncEngine sharedEngine] startSync];
+
     
 }
 #pragma mark - Regions
@@ -266,11 +304,50 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
             return NO;
         }
         
+        
+    }
+    // show the communicate actions...
+    if ([viewController.tabBarItem.title isEqualToString:@"Communicate"])
+    {
+       
+        UIActionSheet * communicateSheet = [[UIActionSheet alloc] initWithTitle:@"Late or Tweet?" delegate:socialDelegate cancelButtonTitle:@"None" destructiveButtonTitle:nil otherButtonTitles:@"Send SMS",@"Send Email",@"Tweet", nil];
+        [communicateSheet showFromTabBar:tabBarController.tabBar];
+        
+        return NO;
     }
     return YES;
 }
 
 #pragma mark Alet view handler
+-(BOOL)slouldAlertToCheck:(NSString*)in_out
+{
+    NSDate *now = [NSDate date];
+    NSDateFormatter *dateFormate = [[NSDateFormatter alloc] init];
+    [dateFormate setDateFormat: @"EEEE"];
+
+    NSString* key =[NSString stringWithFormat:@"work_%@_preference", [[dateFormate stringFromDate:now] lowercaseString]];
+        NSLog(@"The day of the week is: %@", key);
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:key]) {
+        // Weekend.
+        return NO;
+    }
+    //check time
+    [dateFormate setDateFormat:@"HH:mm"];
+    NSDate * breakStart = [dateFormate dateFromString:[[NSUserDefaults standardUserDefaults] objectForKey:@"break_start_time_preference"]];
+        NSLog(@"The day of the week is: %@", [dateFormate stringFromDate:breakStart]);
+    NSDate * breakEnd   = [dateFormate dateFromString:[[NSUserDefaults standardUserDefaults] objectForKey:@"break_end_time_preference"]];
+    NSLog(@"The day of the week is: %@", [dateFormate stringFromDate:breakEnd]);
+    
+    if ([breakEnd compare:now] == NSOrderedDescending
+        && [breakStart compare:now] == NSOrderedAscending) {
+       //break time
+        return  NO;
+    
+    }
+    
+    return YES;
+    
+}
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString * title = [alertView buttonTitleAtIndex:buttonIndex];
     if([alertView.title isEqualToString:@"Alert"])
@@ -345,6 +422,10 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
 
 - (void)sendAlertOrNotificationForCheck:(NSString*)in_out
 {
+    // in weekend or in break time.
+    if (![self slouldAlertToCheck:in_out]) {
+        return;
+    }
     // became inside the range .. Lets Tell him to check int.
     if ([self isInBackGround])
     {

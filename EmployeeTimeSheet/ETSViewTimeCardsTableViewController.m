@@ -10,6 +10,9 @@
 #import "ETSAddTimeCardViewController.h"
 #import "TimeCard.h"
 #import "ETSAppDelegate.h"
+#import "SDSyncEngine.h"
+#import "SDCoreDataController.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @interface ETSViewTimeCardsTableViewController ()
 
@@ -33,9 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    ETSAppDelegate *appD = [[UIApplication sharedApplication]delegate];
-    context = [appD managedObjectContext];
-    
+//    ETSAppDelegate *appD = [[UIApplication sharedApplication]delegate];
+//    context = [appD managedObjectContext];
+    context = [[SDCoreDataController sharedInstance] masterManagedObjectContext];
      NSError* error;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
@@ -52,6 +55,34 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self checkSyncStatus];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"SDSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        //reload core data.
+        [self.fetchedResultsController performFetch:nil];
+        [self.tableView reloadData];
+    }];
+    [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SDSyncEngineSyncCompleted" object:nil];
+    [[SDSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
+}
+- (void)checkSyncStatus {
+    [AFNetworkActivityIndicatorManager sharedManager].enabled =YES;
+    //    if ([[SDSyncEngine sharedEngine] syncInProgress]) {
+    //        [self replaceRefreshButtonWithActivityIndicator];
+    //    } else {
+    //        [self removeActivityIndicatorFromRefreshButton];
+    //    }
+}
+
+
 - (NSFetchedResultsController *)fetchedResultsController {
     
     if (_fetchedResultsController != nil) {
@@ -81,6 +112,7 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - Gesture Recognizer
+
 -(void)checkOut:(UIGestureRecognizer *)gestureRecognizer {
     
     if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {

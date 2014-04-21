@@ -17,6 +17,12 @@
 @property (nonatomic, retain) NSString * phone;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSSet *location;
+@property (nonatomic, retain) NSNumber * syncStatus;
+@property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSString * objectid;
+
+
 @end
 
 @interface Manager (CoreDataGeneratedAccessors)

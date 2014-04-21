@@ -61,7 +61,10 @@
     
     
 }
-
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    return [textField resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -78,10 +81,7 @@
     // Pass the selected object to the new view controller.
 }
 */
--(BOOL) textFieldShouldReturn:(UITextField *)textField
-{
-    return [textField resignFirstResponder];
-}
+
 - (IBAction)saveTimeCard:(UIBarButtonItem *)sender {
     
     //get location

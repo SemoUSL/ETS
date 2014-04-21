@@ -17,6 +17,12 @@
 @property (nonatomic, retain) NSDate * checkIn;
 @property (nonatomic, retain) NSDate * checkOut;
 @property (nonatomic, retain) NSString * comment;
+@property (nonatomic, retain) NSNumber * syncStatus;
+@property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSString * objectid;
+
+
 @property (nonatomic, retain) NSNumber * manualUpdated;
 @property (nonatomic, retain) NSManagedObject *location;
 

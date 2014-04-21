@@ -16,5 +16,10 @@
 @dynamic phone;
 @dynamic email;
 @dynamic location;
+@dynamic syncStatus;
+@dynamic createdAt;
+@dynamic updatedAt;
+@dynamic objectid;
+
 
 @end

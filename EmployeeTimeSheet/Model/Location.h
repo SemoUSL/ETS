@@ -19,6 +19,11 @@
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
+@property (nonatomic, retain) NSNumber * syncStatus;
+@property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSString * objectid;
+
 @property (nonatomic, retain) NSManagedObject *manager;
 @property (nonatomic, retain) NSSet *timeCard;
 @end

@@ -10,6 +10,7 @@
 #import "Location.h"
 #import "TimeCard.h"
 #import "Manager.h"
+#import "SDSyncEngine.h"
 @interface ETSAddLocationViewController ()
 {
     MKPointAnnotation * newPin;
@@ -284,6 +285,7 @@
         self.location.latitude = [NSNumber numberWithDouble:newPin.coordinate.latitude];
         self.location.longitude= [NSNumber numberWithDouble:newPin.coordinate.longitude];
         self.location.address = _address;
+        self.location.syncStatus = @(SDObjectCreated);
         [self.delegate addLocation:self.location withSave:YES];
         [self.navigationController popViewControllerAnimated:YES];
     }

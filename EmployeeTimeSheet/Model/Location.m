@@ -19,6 +19,11 @@
 @dynamic longitude;
 @dynamic manager;
 @dynamic timeCard;
+@dynamic syncStatus;
+@dynamic createdAt;
+@dynamic updatedAt;
+@dynamic objectid;
+
 
 
 + (Location*)findByName:(NSString*)name context:(NSManagedObjectContext *)context

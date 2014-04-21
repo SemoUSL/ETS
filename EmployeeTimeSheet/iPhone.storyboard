@@ -275,7 +275,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9GQ-ae-iWS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="633" y="-376"/>
+            <point key="canvasLocation" x="1159" y="-376"/>
         </scene>
         <!--Add Time Card View Controller-->
         <scene sceneID="LO2-sW-2Xu">
@@ -358,7 +358,23 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sxr-yl-JN6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1034" y="-376"/>
+            <point key="canvasLocation" x="1560" y="-376"/>
+        </scene>
+        <!--View Controller - Communicate-->
+        <scene sceneID="nkm-t9-JmA">
+            <objects>
+                <viewController title="Communicate" id="hHH-4V-nHa" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fjb-mU-V1v">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Communicate" image="Communicate" id="JMm-rw-jKD"/>
+                    <navigationItem key="navigationItem" id="yuQ-hP-3MR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n1Z-z5-HQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="249" y="-290"/>
         </scene>
         <!--Navigation Controller - TimeSheet-->
         <scene sceneID="vDd-Lb-v5f">
@@ -374,7 +390,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GuS-gM-kHh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="268" y="-371"/>
+            <point key="canvasLocation" x="794" y="-371"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="0vU-Dc-5eT">
@@ -390,6 +406,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <connections>
                         <segue destination="gpc-Mg-1a4" kind="relationship" relationship="viewControllers" id="N3l-BP-6tL"/>
                         <segue destination="MrP-Le-Zzc" kind="relationship" relationship="viewControllers" id="K1G-OM-4Tl"/>
+                        <segue destination="hHH-4V-nHa" kind="relationship" relationship="viewControllers" id="pMn-fh-Ggk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OID-Ho-BxD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -400,6 +417,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     <resources>
         <image name="07-map-marker.png" width="16" height="26"/>
         <image name="11-clock.png" width="25" height="25"/>
+        <image name="Communicate" width="24" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
