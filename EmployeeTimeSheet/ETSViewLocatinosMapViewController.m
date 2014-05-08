@@ -9,10 +9,11 @@
 #import "ETSViewLocatinosMapViewController.h"
 #import "LocationMonitor.h"
 #import "TimeCard.h"
-#import "SDSyncEngine.h"
+//#import "SDSyncEngine.h"
 #import "SDCoreDataController.h"
-#import "AFNetworkActivityIndicatorManager.h"
+//#import "AFNetworkActivityIndicatorManager.h"
 #import "ETSSocial.h"
+#import "Parse/Parse.h"
 
 
 
@@ -49,8 +50,7 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     return self;
 }
 
-- (void)loadMapRegionsFromCoreData
-{
+- (void)loadMapRegionsFromCoreData{
     NSError* error;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
@@ -71,7 +71,6 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
 
     }
 }
-
 - (void)viewDidLoad{
     [super viewDidLoad];
     
@@ -87,7 +86,9 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     
     
     [self loadMapRegionsFromCoreData];
-    
+//    [[SDSyncEngine sharedEngine] startSync];
+    [self downloadLocationsFromParseAPIInBackGround];
+
     
 //    // locationManager
 //    self.locationManager.distanceFilter = kCLLocationAccuracyHundredMeters;
@@ -99,14 +100,21 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterRegion:) name:KETSDidEnterRegion object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didExitRegion:) name:KETSDidExitRegion object:nil];
     
-//    if(self.locationManager.location)
-    {
-        MKCoordinateRegion region = { { 0.0f, 0.0f }, { 0.0f, 0.0f } };
-        region.center = self.map.userLocation.coordinate;
-        region.span.longitudeDelta = 0.15f;
-        region.span.latitudeDelta = 0.15f;
-        [self.map setRegion:region animated:YES];
-    }
+////    if(self.locationManager.location)
+//    {
+//        self.map.delegate = self;
+//        MKCoordinateRegion region = { { 0.0f, 0.0f }, { 0.0f, 0.0f } };
+//        region.center = self.map.userLocation.coordinate;
+//        region.span.longitudeDelta = 0.15f;
+//        region.span.latitudeDelta = 0.15f;
+//        [self.map setRegion:region animated:YES];
+//    }
+    //3D Maps
+    self.map.delegate = self;
+    self.map.centerCoordinate = CLLocationCoordinate2DMake(37.78275123, -122.40416442);
+    self.map.camera.altitude = 200;
+    self.map.camera.pitch = 70;
+    self.map.showsBuildings = YES;
     
     
 }
@@ -123,21 +131,28 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
         //reload map data from core data/
         [self loadMapRegionsFromCoreData];
     }];
-    [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+//    [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
 }
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SDSyncEngineSyncCompleted" object:nil];
-    [[SDSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
+//    [[SDSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
 }
-- (void)checkSyncStatus {
-    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-    //    if ([[SDSyncEngine sharedEngine] syncInProgress]) {
-    //        [self replaceRefreshButtonWithActivityIndicator];
-    //    } else {
-    //        [self removeActivityIndicatorFromRefreshButton];
-    //    }
-}
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+//{
+//    if ([keyPath isEqualToString:@"syncInProgress"]) {
+//        [self checkSyncStatus];
+//    }
+//}
+
+//- (void)checkSyncStatus {
+//    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+//    //    if ([[SDSyncEngine sharedEngine] syncInProgress]) {
+//    //        [self replaceRefreshButtonWithActivityIndicator];
+//    //    } else {
+//    //        [self removeActivityIndicatorFromRefreshButton];
+//    //    }
+//}
 #pragma mark - fetchedResultsController
 - (NSFetchedResultsController *)fetchedResultsController {
     
@@ -267,7 +282,7 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
         exit(1);
     }
     [self registerRegionForLocation:location];
-    [[SDSyncEngine sharedEngine] startSync];
+//    [[SDSyncEngine sharedEngine] startSync];
 
     
 }
@@ -310,7 +325,7 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
     if ([viewController.tabBarItem.title isEqualToString:@"Communicate"])
     {
        
-        UIActionSheet * communicateSheet = [[UIActionSheet alloc] initWithTitle:@"Late or Tweet?" delegate:socialDelegate cancelButtonTitle:@"None" destructiveButtonTitle:nil otherButtonTitles:@"Send SMS",@"Send Email",@"Tweet", nil];
+        UIActionSheet * communicateSheet = [[UIActionSheet alloc] initWithTitle:@"Late or Tweet?" delegate:socialDelegate cancelButtonTitle:@"None" destructiveButtonTitle:nil otherButtonTitles:@"Export TimeSheet",@"Send SMS",@"Send Email",@"Tweet", nil];
         [communicateSheet showFromTabBar:tabBarController.tabBar];
         
         return NO;
@@ -450,7 +465,7 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
 //    else // Active
     {
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[in_out isEqualToString:@"In"]?CHECK_IN_ALERT_TITLE:CHECK_OUT_ALERT_TITLE
-                                                        message:[NSString stringWithFormat:@"You Are Now inside the %@ range.\nPlease,Remmeber to Check-%@.",self.currentRegionLocation.name,in_out]
+                                                        message:[NSString stringWithFormat:@"You Are Now %@side the %@ range.\nPlease,Remmeber to Check-%@.",self.currentRegionLocation.name,in_out,in_out]
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles: [NSString stringWithFormat:@"Check-%@",in_out],nil];
@@ -579,5 +594,59 @@ static NSString* KETSDidExitRegionWithoutCheckOut = @"KETSDidExitRegionWithoutCh
 {
     return [[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground;
 }
+#pragma mark - Parse
+-(void)downloadLocationsFromParseAPIInBackGround
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self downloadFromAPI];
+    });
+}
+- (void)syncWithCoreData:(NSArray *)objects
+{
+    // Results were successfully found, looking first on the
+    // network and then on disk.
+    BOOL updated=NO;
+    for (PFObject * loc in objects)
+    {
+        //check it's not in core data.
+        Location*location= [Location findOrBuildByLatitude:[loc[@"latitude"] doubleValue] longitude:[loc[@"longitude"] doubleValue] inContext:context];
+        //check its id,create and updatedAt.
+//        if (!location.objectId)
+        {
+            updated=YES;
+//            location.objectId=loc[@"objectId"];
+//            location.createdAt=loc[@"createdAt"];
+//            location.updatedAt=loc[@"updatedAt"];
+//            
+            location.name = loc[@"name"];
+            location.address = loc[@"address"];
+            location.range = loc[@"range"];
+//            location.latitude=loc[@"latitude"];
+//            location.longitude=loc[@"longitude"];
+            
+        }
+    }
+    if (updated) {
+        // save
+        [context save:nil];
+    }
+}
+
+-(void)downloadFromAPI
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+//    [query whereKey:@"emoployee" equalTo:[PFUser currentUser]];
+//    query.cachePolicy = kPFCachePolicyNetworkElseCache;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            [self syncWithCoreData:objects];
+        }
+        else {
+            // The network was inaccessible and we have no cached data for
+            // this query.
+        }
+    }];
+}
+
 
 @end

@@ -20,12 +20,17 @@
 @property (nonatomic, retain) NSNumber * syncStatus;
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) NSString * objectid;
+@property (nonatomic, retain) NSString * objectId;
+@property (nonatomic, retain) NSString * locationId;
+
 
 
 @property (nonatomic, retain) NSNumber * manualUpdated;
 @property (nonatomic, retain) NSManagedObject *location;
 
+-(void)sendToParseAPI;
++ (NSFetchedResultsController*) getTimeSheetIncontext:(NSManagedObjectContext*)context;
++(TimeCard*)findOrBuildByCheckIn:(NSDate*)checkin InContext:(NSManagedObjectContext*) context;
 + (TimeCard *)BuildByCheckIn:(NSDate*)checkInTime location:(Location*)checkInlocatoin comment:(NSString*)checkInComment manual:(BOOL)isManual inContext:(NSManagedObjectContext*) context;
 +(TimeCard*)isAtWorkInContext:(NSManagedObjectContext*) context;
 -(BOOL) setCheckOutInContext:(NSManagedObjectContext*)context;

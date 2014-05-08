@@ -6,6 +6,42 @@
 	<array>
 		<dict>
 			<key>Title</key>
+			<string>Manager</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Manager Name</string>
+			<key>Key</key>
+			<string>manager_name</string>
+			<key>DefaultValue</key>
+			<string>Soni</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Mobile Phone</string>
+			<key>Key</key>
+			<string>manager_phone</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Email</string>
+			<key>Key</key>
+			<string>manager_email</string>
+			<key>KeyboardType</key>
+			<string>EmailAddress</string>
+		</dict>
+		<dict>
+			<key>Title</key>
 			<string>Work Times</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -157,6 +193,40 @@
 			<string>work_sunday_preference</string>
 			<key>DefaultValue</key>
 			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Log In</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Email</string>
+			<key>Key</key>
+			<string>login_email</string>
+			<key>KeyboardType</key>
+			<string>EmailAddress</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>User name</string>
+			<key>Key</key>
+			<string>login_username</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Password</string>
+			<key>Key</key>
+			<string>login_password</string>
+			<key>IsSecure</key>
+			<true/>
 		</dict>
 	</array>
 	<key>StringsTable</key>

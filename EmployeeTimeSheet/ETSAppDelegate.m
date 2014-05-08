@@ -8,6 +8,10 @@
 
 #import "ETSAppDelegate.h"
 #import <Parse/Parse.h>
+#import "Location.h"
+#import "TimeCard.h"
+#import "Manager.h"
+//#import "SDSyncEngine.h"
 
 @implementation ETSAppDelegate
 
@@ -17,21 +21,46 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Parse setApplicationId:@"KZ8poNamC1CQaoNmwveZWgyEc0KjoRgKiOFwKPAm"
-                  clientKey:@"5xAb9RL5pSxFIhueU8xqkddqJiq0PEaQmatYhCIi"];
-    
     
     //setting bundle.
-    
     [self initializeUserDefaults];
+    
+    [Parse setApplicationId:@"KZ8poNamC1CQaoNmwveZWgyEc0KjoRgKiOFwKPAm"
+                  clientKey:@"5xAb9RL5pSxFIhueU8xqkddqJiq0PEaQmatYhCIi"];
+    [self login];
+    
+//    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Location class]];
+//    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[TimeCard class]];
+//    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Manager class]];
     return YES;
+}
+-(void)login
+{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    PFUser *user = [PFUser user];
+    user.username = [defaults objectForKey:@"login_username"];
+    user.password = [defaults objectForKey:@"login_password"];
+    user.email    = [defaults objectForKey:@"login_email"];
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            // Hooray! Let them use the app now.
+        } else {
+            [PFUser logInWithUsernameInBackground:user.username password:user.password];
+        }
+    }];
+
 }
 - (void) initializeUserDefaults {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    [defaults setObject:nil forKey:@"initialized_defaults"];
     if (nil == [defaults objectForKey:@"initialized_defaults"])
     {
-    
+        [defaults setObject:@"Soni" forKey:@"manager_name"];
+        [defaults setObject:@"ismail.hassanein@gmail.com" forKey:@"manager_email"];
+        [defaults setObject:@"07721594214" forKey:@"manager_phone"];
+        
         [defaults setObject:@"9:00" forKey:@"work_start_time_preference"];
         [defaults setObject:@"17:00" forKey:@"work_end_time_preference"];
         [defaults setObject:@"13:00" forKey:@"break_start_time_preference"];
@@ -44,6 +73,10 @@
         [defaults setBool:YES forKey:@"work_friday_preference"];
         [defaults setBool:NO forKey:@"work_saturday_preference"];
         [defaults setBool:NO forKey:@"work_sunday_preference"];
+        
+        [defaults setObject:@"Guest" forKey:@"login_username"];
+        [defaults setObject:@"123" forKey:@"login_password"];
+        [defaults setObject:@"guest@example.com" forKey:@"login_email"];
         
         [defaults setObject:@"dummy_value" forKey:@"initialized_defaults"];
     }

@@ -10,7 +10,7 @@
 #import "Location.h"
 #import "TimeCard.h"
 #import "Manager.h"
-#import "SDSyncEngine.h"
+//#import "SDSyncEngine.h"
 @interface ETSAddLocationViewController ()
 {
     MKPointAnnotation * newPin;
@@ -36,7 +36,15 @@
 {
     [super viewDidLoad];
     self.tfLocationName.placeholder = @"Enter Location Name";
-        self.tfAddress.placeholder = @"Search for Location";
+    self.tfAddress.placeholder = @"Search for Location";
+    //3D Maps
+    self.map.delegate = self;
+    self.map.centerCoordinate = CLLocationCoordinate2DMake(37.78275123, -122.40416442);
+    self.map.camera.altitude = 200;
+    self.map.camera.pitch = 70;
+    self.map.showsBuildings = YES;
+    
+
 //    [self.map setMapType:MKMapTypeHybrid];
     newPin = [[MKPointAnnotation alloc] init];
     newCircle = [[MKCircle alloc] init];
@@ -157,12 +165,12 @@
              MKCoordinateRegion region;
              region.center= point;
              
-             
-             MKCoordinateSpan span;
-             double radius = ((CLCircularRegion*)placeMark.region).radius/200;
-             span.latitudeDelta = radius/112.0;
-             region.span = span;
-             [self.map setRegion:region animated:YES];
+             [self.map setCenterCoordinate:point animated:YES];
+//             MKCoordinateSpan span;
+//             double radius = ((CLCircularRegion*)placeMark.region).radius/200;
+//             span.latitudeDelta = radius/112.0;
+//             region.span = span;
+//             [self.map setRegion:region animated:YES];
              
              [self AddMapAnnotation:point];
          }];
@@ -277,17 +285,30 @@
 
 - (IBAction)saveLocation:(UIBarButtonItem *)sender
 {
-    if(self.tfLocationName.text.length>0 && !(newPin.coordinate.latitude == 0 && newPin.coordinate.longitude ==0))
+    NSString* message =@"";
+    if (self.tfLocationName.text.length== 0) {
+        message = [message stringByAppendingString:@"Please Enter Location Name!.\n"];
+    }
+    if(newPin.coordinate.latitude == 0 && newPin.coordinate.longitude ==0)
     {
+         message = [message stringByAppendingString:@"Please Long Press on Map to Set Location Coordinates!.\n"];
+    }
+    if (message.length>0) {
+         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
         self.location = [Location findOrBuildByLatitude:0 longitude:0 inContext:self.context];
         self.location.name     = self.tfLocationName.text;
         self.location.range    = [NSNumber numberWithFloat: self.sldRange.value];
         self.location.latitude = [NSNumber numberWithDouble:newPin.coordinate.latitude];
         self.location.longitude= [NSNumber numberWithDouble:newPin.coordinate.longitude];
         self.location.address = _address;
-        self.location.syncStatus = @(SDObjectCreated);
+//        self.location.syncStatus = @(SDObjectCreated);
+        // add to parse
+        [self.location sendToParseAPI];
         [self.delegate addLocation:self.location withSave:YES];
         [self.navigationController popViewControllerAnimated:YES];
-    }
+    
 }
 @end

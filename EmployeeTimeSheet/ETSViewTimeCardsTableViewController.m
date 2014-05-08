@@ -10,9 +10,10 @@
 #import "ETSAddTimeCardViewController.h"
 #import "TimeCard.h"
 #import "ETSAppDelegate.h"
-#import "SDSyncEngine.h"
+//#import "SDSyncEngine.h"
 #import "SDCoreDataController.h"
-#import "AFNetworkActivityIndicatorManager.h"
+//#import "AFNetworkActivityIndicatorManager.h"
+#import "Parse/Parse.h"
 
 @interface ETSViewTimeCardsTableViewController ()
 
@@ -49,6 +50,9 @@
     UILongPressGestureRecognizer * lpgrCheckOut = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(checkOut:)];
     [self.tableView addGestureRecognizer:lpgrCheckOut];
     
+    [self downloadLocationsFromParseAPIInBackGround];
+
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -65,16 +69,16 @@
         [self.fetchedResultsController performFetch:nil];
         [self.tableView reloadData];
     }];
-    [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+//    [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SDSyncEngineSyncCompleted" object:nil];
-    [[SDSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
+//    [[SDSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
 }
 - (void)checkSyncStatus {
-    [AFNetworkActivityIndicatorManager sharedManager].enabled =YES;
+//    [AFNetworkActivityIndicatorManager sharedManager].enabled =YES;
     //    if ([[SDSyncEngine sharedEngine] syncInProgress]) {
     //        [self replaceRefreshButtonWithActivityIndicator];
     //    } else {
@@ -148,6 +152,12 @@
     return [sectionInfo numberOfObjects];
 }
 
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+//{
+//    if ([keyPath isEqualToString:@"syncInProgress"]) {
+//        [self checkSyncStatus];
+//    }
+//}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -286,6 +296,60 @@
     ETSAddTimeCardViewController* vc = [segue destinationViewController];
     vc.context = context;
     // Pass the selected object to the new view controller.
+}
+#pragma mark - Parse
+-(void)downloadLocationsFromParseAPIInBackGround
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self downloadFromAPI];
+    });
+}
+- (void)syncWithCoreData:(NSArray *)objects
+{
+   
+    BOOL updated=NO;
+    for (PFObject * tc in objects)
+    {
+        //check it's not in core data.
+        TimeCard * timeCard= [TimeCard findOrBuildByCheckIn:tc[@"checkIn"]  InContext:context];
+       
+        updated=YES;
+        if([tc[@"checkOut"] isKindOfClass: [NSDate class]])
+            timeCard.checkOut=tc[@"checkOut"];
+        timeCard.comment=tc[@"comment"];
+        timeCard.manualUpdated=tc[@"manualUpdated"];
+        // location
+        PFObject* loc = tc[@"location"];
+        Location*location= [Location findOrBuildByLatitude:[loc[@"latitude"] doubleValue] longitude:[loc[@"longitude"] doubleValue] inContext:context];
+
+        location.name = loc[@"name"];
+        location.address = loc[@"address"];
+        location.range = loc[@"range"];
+        
+        timeCard.location = location;
+    }
+    if (updated) {
+        // save
+        [context save:nil];
+    }
+}
+
+-(void)downloadFromAPI
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"TimeCard"];
+    [query whereKey:@"employee" equalTo:[PFUser currentUser]];
+    [query includeKey:@"location"];
+
+//    query.cachePolicy = kPFCachePolicyNetworkElseCache;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            [self syncWithCoreData:objects];
+        }
+        else {
+            // The network was inaccessible and we have no cached data for
+            // this query.
+        }
+    }];
 }
 
 

@@ -9,6 +9,7 @@
 #import "ETSAddTimeCardViewController.h"
 #import "Location.h"
 #import "TimeCard.h"
+//#import "SDSyncEngine.h"
 
 @interface ETSAddTimeCardViewController ()
 
@@ -55,9 +56,13 @@
     [super viewDidLoad];
     // get the locations from CoreData.
      fetchedesultsController = [Location getLocationsIncontext:context];
-//    NSLog(@"%i",fetchedesultsController.fetchedObjects.count);
     
+
     
+    pvLocations.delegate = self;
+    self.tfComment.delegate=self;
+    // can't checkin in the future !!.
+    self.dpCheckIn.maximumDate = [NSDate date];
     
     
 }
@@ -94,6 +99,7 @@
         NSLog(@"ERR:%@",error);
     }
     [self.navigationController popViewControllerAnimated:YES];
+//    [[SDSyncEngine sharedEngine] startSync];
     
 }
 @end

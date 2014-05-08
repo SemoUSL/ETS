@@ -89,12 +89,13 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     return [[[NSUserDefaults standardUserDefaults] valueForKey:kSDSyncEngineInitialCompleteKey] boolValue];
 }
 - (void)    startSync {
+
     if (!self.syncInProgress) {
         [self willChangeValueForKey:@"syncInProgress"];
         _syncInProgress = YES;
         [self didChangeValueForKey:@"syncInProgress"];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self downloadDataForRegisteredObjects:YES toDeleteLocalRecords:NO];
+//            [self downloadDataForRegisteredObjects:YES toDeleteLocalRecords:NO];
         });
     }
 }
@@ -142,14 +143,15 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
     return date;
 }
 - (void)    newManagedObjectWithClassName:(NSString *)className forRecord:(NSDictionary *)record {
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:className inManagedObjectContext:[[SDCoreDataController sharedInstance] backgroundManagedObjectContext]];
+    NSManagedObject *newManagedObject = [NSEntityDescription
+                                         insertNewObjectForEntityForName:className inManagedObjectContext:[[SDCoreDataController sharedInstance]  backgroundManagedObjectContext]];
     [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [self setValue:obj forKey:key forManagedObject:newManagedObject];
     }];
     [record setValue:[NSNumber numberWithInt:SDObjectSynced] forKey:@"syncStatus"];
 }
 - (void)    downloadDataForRegisteredObjects:(BOOL)useUpdatedAtDate toDeleteLocalRecords:(BOOL)toDelete {
-    
+    return;
     dispatch_group_t group = dispatch_group_create();
     for (NSString *className in self.registeredClassesToSync)
     {
@@ -161,11 +163,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         }
         NSDictionary* parameters = [self GETParametersForAllRecordsOfClass:className
                                                           updatedAfterDate:mostRecentUpdatedDate];
-        NSLog(@"parameters:/n%@",parameters);
+        //NSLog(@"parameters:/n%@",parameters);
         [self.manager GET:[NSString stringWithFormat:@"classes/%@", className]  parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject)
          {
-             NSDictionary* rdic = (NSDictionary*)responseObject;
-             NSLog(@"%@",rdic);
 //             if ([responseObject isKindOfClass:[NSDictionary class]])
              {
                  [self writeJSONResponse:responseObject toDiskForClassWithName:className];
@@ -188,99 +188,6 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         } else {
             [self processJSONDataRecordsForDeletion];
         }
-    });
-}
-- (void)    postLocalObjectsToServer {
-    dispatch_group_t group = dispatch_group_create();
-    //
-    // Iterate over all register classes to sync
-    //
-    for (NSString *className in self.registeredClassesToSync) {
-        dispatch_group_enter(group);
-        
-        //
-        // Fetch all objects from Core Data whose syncStatus is equal to SDObjectCreated
-        //
-        NSArray *objectsToCreate = [self managedObjectsForClass:className withSyncStatus:SDObjectCreated];
-        //
-        // Iterate over all fetched objects who syncStatus is equal to SDObjectCreated
-        //
-        for (NSManagedObject *objectToCreate in objectsToCreate) {
-            //
-            // Get the JSON representation of the NSManagedObject
-            //
-            NSDictionary *jsonString = [objectToCreate JSONToCreateObjectOnServer];
-          
-            // Create a request using your POST method with the JSON representation of the NSManagedObject
-            //
-//            NSLog(@"%@",jsonString);
-            [self.manager POST:[NSString stringWithFormat:@"classes/%@", className]
-                    parameters:jsonString
-     constructingBodyWithBlock:nil
-                       success:^(NSURLSessionDataTask *task, id responseObject)
-             {
-                 NSLog(@"Success creation: %@", responseObject);
-                 NSDictionary *responseDictionary = responseObject;
-                 NSDate *createdDate = [self dateUsingStringFromAPI:[responseDictionary valueForKey:@"createdAt"]];
-                 [objectToCreate setValue:createdDate forKey:@"createdAt"];
-                 [objectToCreate setValue:[responseDictionary valueForKey:@"objectId"] forKey:@"objectId"];
-                 [objectToCreate setValue:[NSNumber numberWithInt:SDObjectSynced] forKey:@"syncStatus"];
-                 dispatch_group_leave(group);
-             } failure:^(NSURLSessionDataTask *task, NSError *error)
-             {
-                 NSLog(@"Failed creation: %@", error);
-                 dispatch_group_leave(group);
-             }];
-            
-        }
-        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-            
-            [[SDCoreDataController sharedInstance] saveBackgroundContext];
-            [self deleteObjectsOnServer];        });
-        
-    }
-    
-}
-- (void)    deleteObjectsOnServer {
-    dispatch_group_t group = dispatch_group_create();
-    // Iterate over all registered classes to sync
-    //
-    for (NSString *className in self.registeredClassesToSync) {
-        //
-        // Fetch all records from Core Data whose syncStatus is equal to SDObjectDeleted
-        //
-        NSArray *objectsToDelete = [self managedObjectsForClass:className withSyncStatus:SDObjectDeleted];
-        //
-        // Iterate over all fetched records from Core Data
-        //
-        for (NSManagedObject *objectToDelete in objectsToDelete) {
-            dispatch_group_enter(group);
-            //
-            // Create a request for each record
-            //
-            [self.manager DELETE:[NSString stringWithFormat:@"classes/%@/%@", className, [objectToDelete valueForKey:@"objectId"]]
-                      parameters:nil
-                         success:^(NSURLSessionDataTask *task, id responseObject) {
-                             NSLog(@"Success deletion: %@", responseObject);
-                             //
-                             // In the operations completion block delete the NSManagedObject from Core data locally since it has been
-                             // deleted on the server
-                             //
-                             [[[SDCoreDataController sharedInstance] backgroundManagedObjectContext] deleteObject:objectToDelete];
-                             dispatch_group_leave(group);
-                             
-                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                             NSLog(@"Failed to delete: %@", error);
-                             
-                         }];
-            
-        }
-    }
-    
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        [[SDCoreDataController sharedInstance] saveBackgroundContext];
-        [self executeSyncCompletedOperations];
-        
     });
 }
 - (void)    updateManagedObject:(NSManagedObject *)managedObject withRecord:(NSDictionary *)record {
@@ -307,6 +214,9 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
                 NSError *error = nil;
                 NSData *dataResponse = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
                 [managedObject setValue:dataResponse forKey:key];
+            }
+            else if ([dataType isEqualToString:@"Pointer"]) {
+                // manage relations later..
             } else {
                 NSLog(@"Unknown Data Type Received");
                 [managedObject setValue:nil forKey:key];
@@ -493,7 +403,7 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
 - (void)    writeJSONResponse:(id)response toDiskForClassWithName:(NSString *)className {
     NSURL *fileURL = [NSURL URLWithString:className relativeToURL:[self JSONDataRecordsDirectory]];
     if (![(NSDictionary *)response writeToFile:[fileURL path] atomically:YES]) {
-        NSLog(@"Error saving response to disk, will attempt to remove NSNull values and try again.");
+//        NSLog(@"Error saving response to disk, will attempt to remove NSNull values and try again.");
         // remove NSNulls and try again...
         NSArray *records = [response objectForKey:@"results"];
         NSMutableArray *nullFreeRecords = [NSMutableArray array];
@@ -573,9 +483,5 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         [self deleteJSONDataRecordsForClassWithName:className];
     }
     
-    //
-    // Execute the sync completion operations as this is now the final step of the sync process
-    //
-    [self postLocalObjectsToServer];
-}
+   }
 @end

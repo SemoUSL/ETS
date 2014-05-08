@@ -22,20 +22,21 @@
 @property (nonatomic, retain) NSNumber * syncStatus;
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) NSString * objectid;
+@property (nonatomic, retain) NSString * objectId;
 
 @property (nonatomic, retain) NSManagedObject *manager;
 @property (nonatomic, retain) NSSet *timeCard;
 @end
 
 @interface Location (CoreDataGeneratedAccessors)
-
+-(void)sendToParseAPI;
 - (void)addTimeCardObject:(TimeCard *)value;
 - (void)removeTimeCardObject:(TimeCard *)value;
 - (void)addTimeCard:(NSSet *)values;
 - (void)removeTimeCard:(NSSet *)values;
 + (Location*)findByName:(NSString*)name context:(NSManagedObjectContext *)context;
 + (Location *)findOrBuildByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude inContext:(NSManagedObjectContext *)context;
++ (Location*)findByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude context:(NSManagedObjectContext *)context;
 + (NSFetchedResultsController*) getLocationsIncontext:(NSManagedObjectContext*)context;
 - (id)initWithContext:(NSManagedObjectContext *)context;
 -(double) distanceFromLatitude:(CLLocationDegrees)latitude andLongitude:(CLLocationDegrees)longitude;

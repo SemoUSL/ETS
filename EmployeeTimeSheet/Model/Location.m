@@ -8,6 +8,8 @@
 
 #import "Location.h"
 #import "TimeCard.h"
+#import "Parse/Parse.h"
+
 
 
 @implementation Location
@@ -22,7 +24,7 @@
 @dynamic syncStatus;
 @dynamic createdAt;
 @dynamic updatedAt;
-@dynamic objectid;
+@dynamic objectId;
 
 
 
@@ -100,16 +102,32 @@
 {
     return [[CLLocation alloc] initWithLatitude:[self.latitude doubleValue] longitude:[self.longitude doubleValue]];
 }
-//- (void)unpackDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context
-//{
-//    NSString *itemId       = [[dictionary objectForKey:@"id"] stringValue];
-//    NSString *itemName     = [dictionary objectForKey:@"name"];
-//    NSString *categoryName = [dictionary objectForKey:@"category"];
-//    
-//    
-//    self.remote_id   = [NSNumber numberWithInteger:  [itemId integerValue]];
-//    self.name     = itemName;
-//    self.category = categoryName;
-//}
 
+
+
+-(void)sendToParseAPI
+{
+    PFObject *newLocation = [PFObject objectWithClassName:NSStringFromClass([self class])];
+    [newLocation setObject:self.name forKey:@"name"];
+    [newLocation setObject:self.address forKey:@"address"];
+    [newLocation setObject:self.latitude forKey:@"latitude"];
+    [newLocation setObject:self.longitude forKey:@"longitude"];
+    [newLocation setObject:self.range forKey:@"range"];
+    
+    [newLocation setObject:[PFUser currentUser] forKey:@"employee"]; // One-to-Many relationship created here!
+    
+    // Set ACL permissions for added security
+    PFACL *locationACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    [locationACL setPublicReadAccess:YES];
+
+    [newLocation setACL:locationACL];
+    
+    // Save new Location object in Parse
+    [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Saved to Parse.......");
+        }
+    }];
+
+}
 @end
